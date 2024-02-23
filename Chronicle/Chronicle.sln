@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronicle.Domain", "Chronicle.Domain.csproj", "{75F62532-6B89-4A8B-BA64-49A2A93CBDCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronical.App", "..\Chronical.App\Chronical.App.csproj", "{C6EC902D-A602-46A7-A479-58E936F1DA0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75F62532-6B89-4A8B-BA64-49A2A93CBDCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75F62532-6B89-4A8B-BA64-49A2A93CBDCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75F62532-6B89-4A8B-BA64-49A2A93CBDCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75F62532-6B89-4A8B-BA64-49A2A93CBDCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6EC902D-A602-46A7-A479-58E936F1DA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6EC902D-A602-46A7-A479-58E936F1DA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6EC902D-A602-46A7-A479-58E936F1DA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6EC902D-A602-46A7-A479-58E936F1DA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C937600F-0556-4B88-9644-6BE646E58751}
+	EndGlobalSection
+EndGlobal

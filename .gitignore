@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Chronical.App/obj/Debug/net6.0/Chronical.App.GeneratedMSBuildEditorConfig.editorconfig
+/Chronical.App/obj/Debug/net6.0/Chronical.App.csproj.AssemblyReference.cache
+/Chronical.App/obj/Debug/net6.0/Chronical.App.assets.cache
+/Chronical.App/obj/Debug/net6.0/Chronical.App.AssemblyInfoInputs.cache
+/Chronical.App/obj/Debug/net6.0
+/Chronical.App/obj/Chronical.App.csproj.nuget.dgspec.json
+/Chronical.App/obj
+/Chronical.App/Properties
