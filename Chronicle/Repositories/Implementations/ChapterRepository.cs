@@ -9,5 +9,10 @@ namespace Chronicle.Domain.Repositories.Implementations
         {
             throw new NotImplementedException("IMPLEMENT DB TO GET CHAPTER");
         }
+
+        public IQueryable<Chapter> FetchAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
