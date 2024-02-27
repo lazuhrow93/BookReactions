@@ -1,5 +1,6 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
+using Chronicle.Entity.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,24 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class CommentRepository : IRepository<Comment>
+    public class CommentRepository : ICommentRepository
     {
-        public Comment Get(int id)
+        private ChronicleDBContext _context;
+
+        public CommentRepository(ChronicleDBContext context)
         {
-            throw new NotImplementedException("IMPLEMENT DB TO GET COMMENTS BY ID");
+            _context = context;    
+        }
+
+        public IEnumerable<Comment> UnderChapter(int chapterId)
+        {
+            var all = FetchAll().Where(c => c.ChapterId == chapterId);
+            return all ?? Enumerable.Empty<Comment>();
         }
 
         public IQueryable<Comment> FetchAll()
         {
-            throw new NotImplementedException("IMPLEMENT DB TO GET ALL");
+            return _context.Comment.AsQueryable<Comment>();
         }
     }
 }

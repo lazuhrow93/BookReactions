@@ -1,11 +1,12 @@
 ﻿using Chronicle.Domain.Entity;
 using System;
 using Chronicle.Domain.Entity.Interfaces;
+using Chronical.Domaion.FrontEnd;
 
 namespace Chronical.App.Services.Interfaces
 {
-    public interface IViewChapterCommentsService
+    public interface ICommentsService
     {
-        public Comment[] GetCommentsForBook(int bookId, int chapterId); 
+        public ChapterCommentsDto UnderChapter(int chapterId); 
     }
 }

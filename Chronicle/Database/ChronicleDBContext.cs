@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Chronicle.Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Chronicle.Entity.Database
 {
-    public class ChronicleDBContext
+    public class ChronicleDBContext : DbContext
     {
+        public DbSet<Comment> Comment { get; set; }
+
+        public ChronicleDBContext(DbContextOptions<ChronicleDBContext> options) : base(options)
+        {
+            
+        }
+
+
     }
 }
