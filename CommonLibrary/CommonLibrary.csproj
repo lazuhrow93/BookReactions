@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageTags>LazLibrary</PackageTags>
+    <PackageId>laz-the-developer-spicy-wing</PackageId>
+    <Title>SpicyWing</Title>
+  </PropertyGroup>
+
+</Project>
