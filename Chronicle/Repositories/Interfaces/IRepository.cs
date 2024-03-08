@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Interfaces
 {
-    public interface IRepository<T>
+    public interface IRepository<TEntity>
     {
-        public IQueryable<T> FetchAll();
+        public IQueryable<TEntity> FetchAll();
+        public TEntity? Get(int id);
+        public TEntity Add(TEntity entity);
+        public IEnumerable<TEntity> Add(IEnumerable<TEntity> entities);
+        public TEntity Update(TEntity entity);
+        public void Delete(TEntity entities);
+        public void Delete(IEnumerable<TEntity> entities);
+        public void SaveChanges();
     }
 }

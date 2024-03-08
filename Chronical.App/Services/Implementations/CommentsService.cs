@@ -16,10 +16,12 @@ namespace Chronical.App.Services.Implementations
 
         public ChapterCommentsDto UnderChapter(int chapterId)
         {
-            var comments = _commentRepository.UnderChapter(chapterId);
+            var comments = _commentRepository
+                .FetchAll()
+                .Select(c => c.ChapterId == chapterId).ToArray();
 
-            if (comments == null)
-                throw new NotImplementedException("there are not comments under this chapter, do something about it");
+            if (comments.IsNullOrEmpty())
+                throw new NotImplementedException("there are not comments under this chapter, do something about it!");
             
             return new ChapterCommentsDto()
             {

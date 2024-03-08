@@ -9,6 +9,5 @@ namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface ICommentRepository : IRepository<Comment>
     {
-        public IEnumerable<Comment> UnderChapter(int chapterId);
     }
 }

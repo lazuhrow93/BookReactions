@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronicle.Domain.Entity.Interfaces
+namespace Chronicle.Domain.Database.Interfaces
 {
-    public interface IEntity
+    public interface IDbContext
     {
     }
 }

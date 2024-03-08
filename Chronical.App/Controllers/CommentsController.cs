@@ -9,6 +9,7 @@ namespace Chronical.App.Controllers
     public class CommentsController
     {
         ICommentsService _commentsService;
+        IChapterService _chapterService;
 
         public CommentsController(ICommentsService commentsService)
         {
@@ -18,8 +19,6 @@ namespace Chronical.App.Controllers
         [HttpGet(Name = "chapter/{id}")]
         public ChapterCommentsDto Get(int chapterId)
         {
-            var comments = new List<ChapterCommentsDto>();
-
             return _commentsService.UnderChapter(chapterId);
         }
     }
