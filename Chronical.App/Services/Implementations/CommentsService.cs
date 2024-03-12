@@ -2,31 +2,46 @@
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Domain.Entity;
 using Chronical.Domaion.FrontEnd;
+using CommonLibrary.Extensions;
+using Chronical.App.Controllers;
+using AutoMapper;
 
 namespace Chronical.App.Services.Implementations
 {
     public class CommentsService : ICommentsService
     {
         private ICommentRepository _commentRepository;
+        private IChapterRepository _chapterRepositor;
+        private IBookRepository _bookRepository;
+        private IMapper _mapper;
 
-        public CommentsService(ICommentRepository commentRepository)
+        public CommentsService(
+            ICommentRepository commentRepository,
+            IMapper mapper)
         {
             _commentRepository = commentRepository;
+            mapper = mapper;
         }
 
         public ChapterCommentsDto UnderChapter(int chapterId)
         {
             var comments = _commentRepository
-                .FetchAll()
-                .Select(c => c.ChapterId == chapterId).ToArray();
+                .comments
+                .Where(c => c.ChapterId == chapterId).ToArray();
 
-            if (comments.IsNullOrEmpty())
-                throw new NotImplementedException("there are not comments under this chapter, do something about it!");
-            
+            var noComments = comments.IsNullOrEmpty();
+
             return new ChapterCommentsDto()
             {
-                Comments = comments.Select(c => c.CommentLiteral!) ?? Enumerable.Empty<string>()
+                Comments = (noComments) ? Enumerable.Empty<string>() : comments.Select(c => c.Value!),
+                Message = (noComments) ? "No Comments Yet!" : ""
             };
+        }
+
+        public bool AddComment(AddCommentsDto newComment)
+        {
+            var chapter = newComment.ChapterId;
+
         }
     }
 }

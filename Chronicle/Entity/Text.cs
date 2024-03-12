@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Entity
 {
-    public class Text
+    public class Text : IEntity
     {
         public int Id { get; set; }
         public string? TextLiteral { get; set; }

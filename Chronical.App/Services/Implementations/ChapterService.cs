@@ -1,4 +1,5 @@
 ﻿using Chronical.App.Services.Interfaces;
+using Chronicle.Domain.Repositories.Interfaces;
 
 namespace Chronical.App.Services.Implementations
 {
@@ -13,7 +14,7 @@ namespace Chronical.App.Services.Implementations
 
         public bool ChapterExists(int id)
         {
-            return chapterRepository.ChapterExists(id);
+            return (chapterRepository.Get(id) != null);
         }
     }
 }

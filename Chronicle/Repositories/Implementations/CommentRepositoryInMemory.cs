@@ -16,14 +16,9 @@ namespace Chronicle.Domain.Repositories.Implementations
         private static Dictionary<int, Comment> _comments = new Dictionary<int, Comment>();
         private static Dictionary<int, Comment> _context = new Dictionary<int, Comment>();
 
-        public IQueryable<Comment> FetchAll()
+        public IQueryable<Comment> comments
         {
-            return _comments.Select(kv => kv.Value).AsQueryable();
-        }
-
-        public Comment? Get(int id)
-        {
-            return (_comments.TryGetValue(id, out var entity)) ? entity : null;
+            get { return _comments.Values.AsQueryable<Comment>(); }
         }
 
         public Comment Add(Comment entity)
@@ -58,6 +53,11 @@ namespace Chronicle.Domain.Repositories.Implementations
         {
             foreach (var comment in entities)
                 Delete(comment);
+        }
+
+        public Comment? Get(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public void SaveChanges()

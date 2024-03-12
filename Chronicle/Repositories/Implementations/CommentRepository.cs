@@ -13,7 +13,7 @@ namespace Chronicle.Domain.Repositories.Implementations
     public class CommentRepository : ICommentRepository
     {
         private ChronicleDBContext _context { get; set; }
-        private IQueryable<Comment> _comments
+        public IQueryable<Comment> comments
         {
             get { return _context.Set<Comment>().AsQueryable(); }
         }
@@ -21,7 +21,6 @@ namespace Chronicle.Domain.Repositories.Implementations
         public CommentRepository(ChronicleDBContext context)
         {
             _context = context;
-            _comments = FetchAll();
         }
 
         public void AddComment(Comment comment)
@@ -34,17 +33,7 @@ namespace Chronicle.Domain.Repositories.Implementations
             throw new NotImplementedException();
         }
 
-        public IQueryable<Comment> FetchAll()
-        {
-            return _comments;
-        }
-
         public Comment Add(Comment entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Comment Add(IEnumerable<Comment> entities)
         {
             throw new NotImplementedException();
         }
@@ -66,7 +55,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public Comment? Get(int id)
         {
-            return _comments.FirstOrDefault(c => c.Id == id);
+            return comments.FirstOrDefault(c => c.Id == id);
         }
 
         IEnumerable<Comment> IRepository<Comment>.Add(IEnumerable<Comment> entities)

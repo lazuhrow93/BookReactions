@@ -1,4 +1,6 @@
-﻿using Chronicle.Domain.Database;
+﻿using Chronical.App.Services.Implementations;
+using Chronical.App.Services.Interfaces;
+using Chronicle.Domain.Database;
 using Chronicle.Domain.Database.Interfaces;
 using Chronicle.Domain.Repositories.Implementations;
 using Chronicle.Domain.Repositories.Interfaces;
@@ -15,6 +17,7 @@ namespace Chronical.App.Configuration
         {
             services.ConfigureDb();
             services.ConfigureRepositories();
+            services.ConfigureServices();
             return services;
         }
 
@@ -30,13 +33,19 @@ namespace Chronical.App.Configuration
 
             if (debug)
             {
-                services.AddScoped<ICommentRepository, CommentRepositoryInMemory>();
+                services.AddSingleton<ICommentRepository, CommentRepositoryInMemory>();
             }
             else
             {
-                services.AddScoped<ICommentRepository, CommentRepository>();
+                services.AddSingleton<ICommentRepository, CommentRepository>();
             }
 
+            return services;
+        }
+
+        public static IServiceCollection ConfigureServices(this IServiceCollection services)
+        {
+            services.AddSingleton<ICommentsService, CommentsService>();
             return services;
         }
     }

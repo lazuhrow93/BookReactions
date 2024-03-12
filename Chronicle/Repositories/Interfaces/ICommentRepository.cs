@@ -9,5 +9,6 @@ namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface ICommentRepository : IRepository<Comment>
     {
+        public IQueryable<Comment> comments { get; }
     }
 }
