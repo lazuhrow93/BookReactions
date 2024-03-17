@@ -13,5 +13,6 @@ namespace Chronicle.Domain.Entity
         public string? SubText { get; set; }
         public int ChapterId { get; set; }
         public string? Value { get; set; }
+        public DateTime LastUpdate { get; set; }
     }
 }

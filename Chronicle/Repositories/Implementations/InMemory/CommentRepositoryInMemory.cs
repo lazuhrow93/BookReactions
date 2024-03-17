@@ -9,32 +9,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronicle.Domain.Repositories.Implementations
+namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
     public class CommentRepositoryInMemory : ICommentRepository
     {
-        private static Dictionary<int, Comment> _comments = new Dictionary<int, Comment>();
-        private static Dictionary<int, Comment> _context = new Dictionary<int, Comment>();
+        private static Dictionary<int, Comment> _softCopy = new Dictionary<int, Comment>();
+        private static Dictionary<int, Comment> _hardCopy = new Dictionary<int, Comment>();
 
         public IQueryable<Comment> comments
         {
-            get { return _comments.Values.AsQueryable<Comment>(); }
+            get { return _softCopy.Values.AsQueryable(); }
         }
 
         public Comment Add(Comment entity)
         {
-            _comments.Add(entity.Id, entity);
+            _softCopy.Add(entity.Id, entity);
             return entity;
         }
 
         public IEnumerable<Comment> Add(IEnumerable<Comment> entities)
         {
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
-                if(_comments.TryGetValue(entity.Id, out var existingValue) == false)
+                if (_softCopy.TryGetValue(entity.Id, out var existingValue) == false)
                 {
-                    _comments.Add(entity.Id, entity);
-                    yield return _comments[entity.Id];
+                    _softCopy.Add(entity.Id, entity);
+                    yield return _softCopy[entity.Id];
                 }
                 else
                 {
@@ -45,8 +45,8 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public void Delete(Comment entity)
         {
-            if(_comments.TryGetValue(entity.Id, out var toDelete))
-                _comments.Remove(entity.Id);
+            if (_softCopy.TryGetValue(entity.Id, out var toDelete))
+                _softCopy.Remove(entity.Id);
         }
 
         public void Delete(IEnumerable<Comment> entities)
@@ -62,13 +62,13 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public void SaveChanges()
         {
-            _context = _comments;
-        } 
+            _hardCopy = _softCopy;
+        }
 
         public Comment Update(Comment entity)
         {
-            _comments[entity.Id] = entity;
-            return _comments[entity.Id];
+            _softCopy[entity.Id] = entity;
+            return _softCopy[entity.Id];
         }
     }
 }

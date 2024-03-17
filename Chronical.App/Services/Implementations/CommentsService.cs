@@ -38,10 +38,13 @@ namespace Chronical.App.Services.Implementations
             };
         }
 
-        public bool AddComment(AddCommentsDto newComment)
+        public void AddComment(AddCommentsDto newComment, int bookId, int chapterId)
         {
-            var chapter = newComment.ChapterId;
-
+            var newCommentEntity = _mapper.Map<Comment>(newComment);
+            newCommentEntity.BookId = bookId;
+            newCommentEntity.ChapterId = chapterId;
+            newCommentEntity.LastUpdate = DateTime.UtcNow;
+            _commentRepository.Add(newCommentEntity);
         }
     }
 }

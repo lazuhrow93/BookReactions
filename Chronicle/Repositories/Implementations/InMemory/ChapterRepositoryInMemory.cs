@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 
-namespace Chronicle.Domain.Repositories.Implementations
+namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
     public class ChapterRepositoryInMemory : IChapterRepository
     {
@@ -19,7 +19,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public IQueryable<Chapter> chapters
         {
-            get { return _hardCopy.Values.AsQueryable<Chapter>(); }
+            get { return _softCopy.Values.AsQueryable(); }
         }
 
         public Chapter Add(Chapter entity)
@@ -31,7 +31,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public IEnumerable<Chapter> Add(IEnumerable<Chapter> entities)
         {
-            foreach(var chapter in entities)
+            foreach (var chapter in entities)
             {
                 AssignId(chapter);
                 _softCopy.Add(chapter.Id, chapter);
@@ -46,7 +46,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public void Delete(IEnumerable<Chapter> entities)
         {
-            foreach(var chapter in entities)
+            foreach (var chapter in entities)
             {
                 _softCopy.Remove(chapter.Id);
             }
@@ -71,7 +71,7 @@ namespace Chronicle.Domain.Repositories.Implementations
             _softCopy[entity.Id] = entity;
             return _softCopy[entity.Id];
         }
-        
+
         private void AssignId(Chapter chapter)
         {
             lock (locker)

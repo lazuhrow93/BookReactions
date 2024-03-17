@@ -11,9 +11,15 @@ namespace Chronical.App.Controllers
     {
         ICommentsService _commentsService;
         IChapterService _chapterService;
+        IBookService _bookService;
 
-        public CommentsController(ICommentsService commentsService)
+        public CommentsController(
+            ICommentsService commentsService,
+            IChapterService chapterService,
+            IBookService bookService)
         {
+            _bookService = bookService;
+            _chapterService = chapterService;
             _commentsService = commentsService;
         }
 
@@ -24,10 +30,16 @@ namespace Chronical.App.Controllers
             return _commentsService.UnderChapter(chapterId);
         }
 
-        [HttpPost(Name = "chapter/{id}")]
-        public bool AddCommentToChapter(int chapterId, AddCommentsDto newComment)
+        [HttpPost(Name = "chapter/{bookId}/{chapterId}")]
+        public bool AddCommentToChapter(int bookId, int chapterId, AddCommentsDto newComment)
         {
-            
+            if (!_bookService.BookExists(bookId))
+                throw new Exception($"Book doesn't exist");
+            if (!_chapterService.ChapterExists(chapterId))
+                throw new Exception($"Chapter doesnt exist in book {bookId}");
+
+            _commentsService.AddComment(newComment, bookId, chapterId);
+            return true;
         }
     }
 }

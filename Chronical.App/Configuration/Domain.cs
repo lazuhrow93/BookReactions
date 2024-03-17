@@ -3,6 +3,7 @@ using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Database;
 using Chronicle.Domain.Database.Interfaces;
 using Chronicle.Domain.Repositories.Implementations;
+using Chronicle.Domain.Repositories.Implementations.InMemory;
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Entity.Database;
 using Microsoft.AspNetCore.Connections.Features;

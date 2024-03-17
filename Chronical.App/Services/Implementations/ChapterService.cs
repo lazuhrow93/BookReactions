@@ -1,20 +1,27 @@
-﻿using Chronical.App.Services.Interfaces;
+﻿using AutoMapper;
+using Chronical.App.Controllers;
+using Chronical.App.Services.Interfaces;
+using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
 
 namespace Chronical.App.Services.Implementations
 {
     public class ChapterService : IChapterService
     {
-        private IChapterRepository chapterRepository;
+        private IMapper _mapper;
+        private IChapterRepository _chapterRepository;
 
-        public ChapterService(IChapterRepository chapterService)
+        public ChapterService(
+            IChapterRepository chapterService,
+            IMapper mapper)
         {
-            chapterRepository = chapterService;
+            _chapterRepository = chapterService;
+            _mapper = mapper;
         }
 
         public bool ChapterExists(int id)
         {
-            return (chapterRepository.Get(id) != null);
+            return (_chapterRepository.Get(id) != null);
         }
     }
 }
