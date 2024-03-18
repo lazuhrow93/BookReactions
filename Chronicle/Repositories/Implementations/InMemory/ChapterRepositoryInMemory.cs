@@ -12,7 +12,7 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
     public class ChapterRepositoryInMemory : IChapterRepository
     {
-        public object locker = new();
+        public object _locker = new();
         private int _identityId = 1;
         private Dictionary<int, Chapter> _softCopy = new Dictionary<int, Chapter>();
         private Dictionary<int, Chapter> _hardCopy = new Dictionary<int, Chapter>();
@@ -74,7 +74,7 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
 
         private void AssignId(Chapter chapter)
         {
-            lock (locker)
+            lock (_locker)
             {
                 chapter.Id = _identityId++;
             }

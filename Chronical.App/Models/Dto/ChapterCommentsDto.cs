@@ -1,4 +1,4 @@
-﻿namespace Chronical.Domaion.FrontEnd
+﻿namespace Chronical.App.Models.Dto
 {
     public class ChapterCommentsDto
     {

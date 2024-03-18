@@ -10,7 +10,6 @@ namespace Chronicle.Domain.Entity
     {
         public int Id { get; set; }
         public string? Title { get; set; }
-        public int AuthorId { get; set; }
-        public int TextId { get; set; }
+        public string? Author { get; set; }
     }
 }

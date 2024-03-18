@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Chronical.App.Controllers
+namespace Chronical.App.Models.Dto
 {
     public class AddCommentsDto
     {

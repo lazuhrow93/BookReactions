@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
-    internal class BookRepositoryInMemory : IBookRepository
+    public class BookRepositoryInMemory : IBookRepository
     {
         private object _locker = new object();
         private int _identityId = 1;
@@ -23,7 +23,7 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
 
         public Book Add(Book book)
         {
-            book.Id = _identityId++;
+            AssignId(book);
             _softCopy[book.Id] = book;
             return _softCopy[book.Id];
         }
@@ -33,11 +33,11 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
             var startId = _identityId;
             foreach(var book in books)
             {
-                book.Id = _identityId++;
+                AssignId(book);
                 _softCopy[book.Id] = book;
             }
             var finalId = _identityId;
-            return _softCopy.Where(d => d.Key > startId && d.Key < finalId).Select(d => d.Value);
+            return _softCopy.Where(d => d.Key >= startId && d.Key < finalId).Select(d => d.Value);
         }
 
         public void Delete(Book book)
@@ -68,6 +68,14 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
         {
             _softCopy[newbook.Id] = newbook;
             return _softCopy[newbook.Id];
+        }
+
+        private void AssignId(Book book)
+        {
+            lock (_locker)
+            {
+                book.Id = _identityId++;
+            }
         }
     }
 }

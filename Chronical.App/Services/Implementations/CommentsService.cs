@@ -1,18 +1,15 @@
 ﻿using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Domain.Entity;
-using Chronical.Domaion.FrontEnd;
 using CommonLibrary.Extensions;
-using Chronical.App.Controllers;
 using AutoMapper;
+using Chronical.App.Models.Dto;
 
 namespace Chronical.App.Services.Implementations
 {
     public class CommentsService : ICommentsService
     {
         private ICommentRepository _commentRepository;
-        private IChapterRepository _chapterRepositor;
-        private IBookRepository _bookRepository;
         private IMapper _mapper;
 
         public CommentsService(
@@ -20,7 +17,7 @@ namespace Chronical.App.Services.Implementations
             IMapper mapper)
         {
             _commentRepository = commentRepository;
-            mapper = mapper;
+            _mapper = mapper;
         }
 
         public ChapterCommentsDto UnderChapter(int chapterId)
@@ -38,13 +35,14 @@ namespace Chronical.App.Services.Implementations
             };
         }
 
-        public void AddComment(AddCommentsDto newComment, int bookId, int chapterId)
+        public bool AddComment(AddCommentsDto newComment, int bookId, int chapterId)
         {
             var newCommentEntity = _mapper.Map<Comment>(newComment);
             newCommentEntity.BookId = bookId;
             newCommentEntity.ChapterId = chapterId;
             newCommentEntity.LastUpdate = DateTime.UtcNow;
             _commentRepository.Add(newCommentEntity);
+            return true;
         }
     }
 }

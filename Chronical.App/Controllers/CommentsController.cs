@@ -1,7 +1,7 @@
 ﻿using Chronical.App.Services.Interfaces;
-using Chronical.Domaion.FrontEnd;
 using Microsoft.AspNetCore.Mvc;
-using CommonLibrary.Extensions;
+using Chronical.App.Models.Dto;
+using Chronical.App.Models;
 
 namespace Chronical.App.Controllers
 {
@@ -23,23 +23,46 @@ namespace Chronical.App.Controllers
             _commentsService = commentsService;
         }
 
-        [HttpGet(Name = "chapter/{id}")]
+        [HttpGet(Name = "comments/{id}")]
         public ChapterCommentsDto Get(int chapterId)
         {
             var result = _commentsService.UnderChapter(chapterId);
             return _commentsService.UnderChapter(chapterId);
         }
 
-        [HttpPost(Name = "chapter/{bookId}/{chapterId}")]
-        public bool AddCommentToChapter(int bookId, int chapterId, AddCommentsDto newComment)
+        [HttpPost(Name = "comment/{bookId}/{chapterId}")]
+        public ChronicleResponse AddCommentToChapter(int bookId, int chapterId, AddCommentsDto newComment)
         {
+            var response = new ChronicleResponse();
+            var errors = new List<string>();
+            var codes = new List<ErrorCode>();
+            
             if (!_bookService.BookExists(bookId))
-                throw new Exception($"Book doesn't exist");
+            {
+                errors.Add("The book doesnt exist");
+                codes.Add(ErrorCode.BookDoesNotExist);
+            }
+            
             if (!_chapterService.ChapterExists(chapterId))
-                throw new Exception($"Chapter doesnt exist in book {bookId}");
+            {
+                errors.Add("The chapter doesn't exist");
+                codes.Add(ErrorCode.ChapterDoesNotExist);
+            }
 
-            _commentsService.AddComment(newComment, bookId, chapterId);
-            return true;
+            if (errors.Any() == false)
+            {
+                var added = _commentsService.AddComment(newComment, bookId, chapterId);
+                if (!added)
+                {
+                    errors.Add("Unable to add this comment to that chapter/book");
+                    codes.Add(ErrorCode.CouldNtAddComment);
+                }
+            }
+
+            response.Success = (errors.Any() == false);
+            response.Error = errors.ToArray();
+            response.Code = codes.ToArray();
+            return response;
         }
     }
 }
