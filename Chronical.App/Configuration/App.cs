@@ -20,7 +20,7 @@ namespace Chronical.App.Configuration
 
         private static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
-            services.AddSingleton<ICommentsService, CommentsService>();
+            services.AddSingleton<ICommentService, CommentService>();
             services.AddSingleton<IChapterService, ChapterService>();
             services.AddSingleton<IBookService, BookService>();
             return services;

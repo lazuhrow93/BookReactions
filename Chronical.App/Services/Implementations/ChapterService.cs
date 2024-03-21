@@ -3,6 +3,7 @@ using Chronical.App.Models.Dto;
 using Chronical.App.Services.Extensions;
 using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Entity;
+using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 using SpicyWing.Extensions;
 
@@ -28,14 +29,36 @@ namespace Chronical.App.Services.Implementations
             _mapper = mapper;
         }
 
-        public bool AddChapter(ChapterDto newChapterDto, int bookId)
+        public ActionResult AddChapter(ChapterDto newChapterDto)
         {
+            var result = new ActionResult()
+            {
+                State = State.NotAdded,
+                Errors = new()
+            };
+
+            var authorDto = newChapterDto.Book!.Author!;
+            var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
+
+            if(author == null)
+            {
+                result.Errors.Add("The author doesnt exist for this chapter");
+            }
+
+            var bookDto = newChapterDto.Book;
+            var book = _bookRepository.FindBookByAuthorAndTitle(author.Id, bookDto.Title);
+            if(book == null)
+            {
+                result.Errors.Add("The book doesnt exist for this chapter");
+            }
+
             var newChapter = _mapper.Map<Chapter>(newChapterDto);
-            newChapter.BookId = bookId;
+            newChapter.BookId = book.Id;
 
             _chapterRepository.Add(newChapter);
             _chapterRepository.SaveChanges();
-            return true;
+            result.State = State.Added;
+            return result;
         }
 
         public bool ChapterExists(int id)

@@ -2,6 +2,7 @@
 using Chronical.App.Models;
 using Chronical.App.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Chronicle.Domain.Repositories;
 
 namespace Chronical.App.Controllers
 {
@@ -21,10 +22,11 @@ namespace Chronical.App.Controllers
         public ChronicleResponse AddBook(BookDto newBookDto)
         {
             var response = new ChronicleResponse();
-            var added = _bookService.AddBook(newBookDto);
-            response.Success = added;
-            response.Error = (!added) ? new string[] { "Unable to add that book" } : null;
-            response.Code = (!added) ? new ErrorCode[] { ErrorCode.CouldNotAddBook } : null;
+
+            var result = _bookService.AddBook(newBookDto);
+
+            response.Success = (result.State == State.Added);
+            response.Error = result.Errors!.ToArray();
             return response;
         }
     }

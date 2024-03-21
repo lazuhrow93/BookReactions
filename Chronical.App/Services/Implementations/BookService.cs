@@ -3,6 +3,7 @@ using Chronical.App.Models.Dto;
 using Chronical.App.Services.Extensions;
 using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Entity;
+using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 
 namespace Chronical.App.Services.Implementations
@@ -22,21 +23,27 @@ namespace Chronical.App.Services.Implementations
             _mapper = mapper;
         }
 
-        public bool AddBook(BookDto newBookDto)
+        public ActionResult AddBook(BookDto newBookDto)
         {
+            var result = new ActionResult()
+            {
+                State = State.NotAdded,
+                Errors = new()
+            };
+
             var authorDto = newBookDto.Author;
             var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
-            if (author is null) return false; //need to add author first
-
-
-            var existingBook = _bookRepository.FindBookByAuthorAndTitle(author.Id, newBookDto.Title!);
-            if (existingBook is not null) return false; //a book with this title already exists
-
+            if (author is null)
+            {
+                result.Errors.Add("The author doesn't exist for this book");
+            }
 
             var newBook = _mapper.Map<Book>(newBookDto);
+            newBook.AuthorId = author.Id;
             _bookRepository.Add(newBook);
             _bookRepository.SaveChanges();
-            return true;
+            result.State = State.Added;
+            return result;
         }
 
         public Book? GetBook(BookDto book)
