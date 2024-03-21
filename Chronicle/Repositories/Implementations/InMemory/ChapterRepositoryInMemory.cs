@@ -17,7 +17,7 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
         private Dictionary<int, Chapter> _softCopy = new Dictionary<int, Chapter>();
         private Dictionary<int, Chapter> _hardCopy = new Dictionary<int, Chapter>();
 
-        public IQueryable<Chapter> chapters
+        public IQueryable<Chapter> Query
         {
             get { return _softCopy.Values.AsQueryable(); }
         }

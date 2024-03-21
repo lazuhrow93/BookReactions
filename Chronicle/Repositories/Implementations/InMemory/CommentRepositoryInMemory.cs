@@ -16,7 +16,7 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
         private static Dictionary<int, Comment> _softCopy = new Dictionary<int, Comment>();
         private static Dictionary<int, Comment> _hardCopy = new Dictionary<int, Comment>();
 
-        public IQueryable<Comment> comments
+        public IQueryable<Comment> Query
         {
             get { return _softCopy.Values.AsQueryable(); }
         }

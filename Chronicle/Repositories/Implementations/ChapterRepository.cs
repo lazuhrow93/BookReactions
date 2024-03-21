@@ -8,7 +8,7 @@ namespace Chronicle.Domain.Repositories.Implementations
     {
         private ChronicleDBContext _context { get; set; }
 
-        public IQueryable<Chapter> chapters
+        public IQueryable<Chapter> Query
         {
             get { return _context.Set<Chapter>().AsQueryable(); }
         }
@@ -42,7 +42,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public Chapter? Get(int id)
         {
-            return chapters.Where(c => c.Id == id).FirstOrDefault();   
+            return Query.Where(c => c.Id == id).FirstOrDefault();   
         }
 
         public void SaveChanges()

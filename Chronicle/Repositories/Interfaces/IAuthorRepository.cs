@@ -1,13 +1,13 @@
-﻿using Chronicle.Domain.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chronicle.Domain.Entity;
 
 namespace Chronicle.Domain.Repositories.Interfaces
 {
-    public interface ICommentRepository : IRepository<Comment>
+    public interface IAuthorRepository : IRepository<Author>
     {
     }
 }

@@ -1,10 +1,6 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CommonLibrary.Extensions;
 
 namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
@@ -16,7 +12,7 @@ namespace Chronicle.Domain.Repositories.Implementations.InMemory
         private Dictionary<int, Book> _softCopy = new();
         private Dictionary<int, Book> _hardCopy = new();
 
-        public IQueryable<Book> books
+        public IQueryable<Book> Query
         {
             get { return _softCopy.Values.AsQueryable(); }
         }

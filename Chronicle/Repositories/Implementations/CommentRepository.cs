@@ -13,7 +13,8 @@ namespace Chronicle.Domain.Repositories.Implementations
     public class CommentRepository : ICommentRepository
     {
         private ChronicleDBContext _context { get; set; }
-        public IQueryable<Comment> comments
+
+        public IQueryable<Comment> Query
         {
             get { return _context.Set<Comment>().AsQueryable(); }
         }
@@ -55,7 +56,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public Comment? Get(int id)
         {
-            return comments.FirstOrDefault(c => c.Id == id);
+            return Query.FirstOrDefault(c => c.Id == id);
         }
 
         IEnumerable<Comment> IRepository<Comment>.Add(IEnumerable<Comment> entities)

@@ -8,6 +8,7 @@ namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface IRepository<TEntity>
     {
+        public IQueryable<TEntity> Query { get; }
         public TEntity? Get(int id);
         public TEntity Add(TEntity entity);
         public IEnumerable<TEntity> Add(IEnumerable<TEntity> entities);

@@ -18,7 +18,7 @@ namespace Chronical.App.Controllers
         }
 
         [HttpPost("book")]
-        public ChronicleResponse AddBook(AddBookDto newBookDto)
+        public ChronicleResponse AddBook(BookDto newBookDto)
         {
             var response = new ChronicleResponse();
             var added = _bookService.AddBook(newBookDto);

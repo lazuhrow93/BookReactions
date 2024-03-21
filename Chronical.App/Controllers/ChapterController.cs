@@ -20,21 +20,22 @@ namespace Chronical.App.Controllers
 
         }
 
-        [HttpPost(Name = "chapter/{bookId}")]
-        public ChronicleResponse AddChapter(int bookId, AddChapterDto newChapter)
+        [HttpPost(Name = "chapter")]
+        public ChronicleResponse AddChapter(ChapterDto newChapter)
         {
             var response = new ChronicleResponse();
             var errors = new List<string>();
             var codes = new List<ErrorCode>();
 
-            if (_bookService.BookExists(bookId) == false)
+            var book = _bookService.GetBook(newChapter.Book!);
+            if (book is null)
             {
                 errors.Add("Unable to add the chapter because the book doesn't exist");
                 codes.Add(ErrorCode.BookDoesNotExist);
             }
             else
             {
-                var added = _chapterService.AddChapter(newChapter);
+                var added = _chapterService.AddChapter(newChapter, book.Id);
                 if (!added)
                 {
                     errors.Add("Unable to add that chapter for unknown reasons");
@@ -46,12 +47,5 @@ namespace Chronical.App.Controllers
             response.Code = codes.ToArray();
             return response;
         }
-    }
-
-    public class AddChapterDto
-    {
-        public string? Title { get; set; }
-        public int Number { get; set; }
-        public string BookTitle { get; set; }
     }
 }

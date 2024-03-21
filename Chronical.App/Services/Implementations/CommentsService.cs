@@ -1,7 +1,7 @@
 ﻿using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Domain.Entity;
-using CommonLibrary.Extensions;
+using SpicyWing.Extensions;
 using AutoMapper;
 using Chronical.App.Models.Dto;
 
@@ -23,7 +23,7 @@ namespace Chronical.App.Services.Implementations
         public ChapterCommentsDto UnderChapter(int chapterId)
         {
             var comments = _commentRepository
-                .comments
+                .Query
                 .Where(c => c.ChapterId == chapterId).ToArray();
 
             var noComments = comments.IsNullOrEmpty();
@@ -35,7 +35,7 @@ namespace Chronical.App.Services.Implementations
             };
         }
 
-        public bool AddComment(AddCommentsDto newComment, int bookId, int chapterId)
+        public bool AddComment(CommentDto newComment, int bookId, int chapterId)
         {
             var newCommentEntity = _mapper.Map<Comment>(newComment);
             newCommentEntity.BookId = bookId;

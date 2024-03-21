@@ -6,7 +6,7 @@ namespace Chronical.App.Services.Interfaces
 {
     public interface ICommentsService
     {
-        public bool AddComment(AddCommentsDto newComment, int bookId, int chapterId);
+        public bool AddComment(CommentDto newComment, int bookId, int chapterId);
         public ChapterCommentsDto UnderChapter(int chapterId); 
     }
 }

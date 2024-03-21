@@ -2,11 +2,11 @@
 
 namespace Chronical.App.Models.Dto
 {
-    public class AddBookDto
+    public class BookDto
     {
         [Required]
-        public string? Title { get; set; }
+        public AuthorDto? Author { get; set; }
         [Required]
-        public string? Author { get; set; }
+        public string? Title { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Chronicle.Domain.Repositories.Implementations
     {
         private ChronicleDBContext _context { get; set; }
 
-        public IQueryable<Book> books 
+        public IQueryable<Book> Query 
         {
             get { return _context.Set<Book>().AsQueryable<Book>(); } 
         }

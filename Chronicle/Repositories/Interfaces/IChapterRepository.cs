@@ -5,6 +5,5 @@ namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface IChapterRepository : IRepository<Chapter>
     {
-        public IQueryable<Chapter> chapters { get; }
     }
 }
