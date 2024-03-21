@@ -60,18 +60,5 @@ namespace Chronical.App.Services.Implementations
             result.State = State.Added;
             return result;
         }
-
-        public bool ChapterExists(int id)
-        {
-            return (_chapterRepository.Get(id) != null);
-        }
-
-        public Chapter? GetChapter(int bookId, ChapterDto chapter)
-        {
-            var book = _bookRepository.Get(bookId);
-            if (book == null) return null;
-
-            return _chapterRepository.GetByBookAndNumber(book.Id, chapter.ChapterNumber);
-        }
     }
 }

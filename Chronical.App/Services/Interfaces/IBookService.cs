@@ -7,6 +7,5 @@ namespace Chronical.App.Services.Interfaces
     public interface IBookService
     {
         public ActionResult AddBook(BookDto newBookDto);
-        public Book? GetBook(BookDto book);
     }
 }

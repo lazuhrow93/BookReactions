@@ -7,6 +7,5 @@ namespace Chronical.App.Services.Interfaces
     public interface IChapterService
     {
         public ActionResult AddChapter(ChapterDto newChapterDto);
-        public Chapter? GetChapter(int id, ChapterDto chapter);
     }
 }

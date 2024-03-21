@@ -45,15 +45,5 @@ namespace Chronical.App.Services.Implementations
             result.State = State.Added;
             return result;
         }
-
-        public Book? GetBook(BookDto book)
-        {
-            var authorDto = book.Author;
-            var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
-
-            if (author is null) return null;
-
-            return (_bookRepository.FindBookByAuthorAndTitle(author.Id, book.Title!));
-        }
     }
 }
