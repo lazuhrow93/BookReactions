@@ -13,8 +13,4 @@
     <PackageReference Include="SpicyWing.Extensions" Version="1.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FrontEnd\" />
-  </ItemGroup>
-
 </Project>
