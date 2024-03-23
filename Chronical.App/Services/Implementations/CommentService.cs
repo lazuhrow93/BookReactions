@@ -3,7 +3,7 @@ using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Domain.Entity;
 using SpicyWing.Extensions;
 using AutoMapper;
-using Chronical.App.Models.Dto;
+using Chronical.App.Models.IncomingDto;
 using Chronicle.Domain.Repositories;
 using Chronical.App.Services.Extensions;
 
@@ -46,11 +46,11 @@ namespace Chronical.App.Services.Implementations
             };
         }
 
-        public ActionResult AddComment(CommentDto newComment)
+        public ActionResult<Comment> AddComment(CommentDto newComment)
         {
             var authorDto = newComment.Chapter.Book!.Author!;
             var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
-            var result = new ActionResult()
+            var result = new ActionResult<Comment>()
             {
                 State = State.NotAdded,
                 Errors = new()
@@ -62,13 +62,14 @@ namespace Chronical.App.Services.Implementations
                 return result;
             }
 
-            var book = _bookRepository.FindBookByAuthorAndTitle(author.Id, newComment.Chapter.Book.Title);
-            if(book is null)
+            var books = _bookRepository.FindBookByAuthorAndTitle(author.Id, newComment.Chapter.Book.Title!);
+            if(books.Any())
             {
                 result.Errors.Add("The book doesn't exist under this author");
                 return result;
             }
 
+            var book = books.First();
             var chapter = _chapterRepository.GetByBookAndNumber(book.Id, newComment.Chapter.ChapterNumber);
             if(chapter is null)
             {
@@ -82,6 +83,7 @@ namespace Chronical.App.Services.Implementations
             newCommentEntity.ChapterId = chapter.Id;
             newCommentEntity.LastUpdate = DateTime.UtcNow;
             _commentRepository.Add(newCommentEntity);
+            result.Entity = newCommentEntity;
             result.State = State.Added;
             return result;
         }

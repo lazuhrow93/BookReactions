@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Chronical.App.Models.Dto
+namespace Chronical.App.Models.IncomingDto
 {
     public class ChapterDto
     {

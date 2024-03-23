@@ -1,8 +1,9 @@
 ﻿using Chronical.App.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Chronical.App.Models.Dto;
+using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models;
 using Chronicle.Domain.Repositories;
+using Chronical.App.Models.OutgoingDto;
 
 namespace Chronical.App.Controllers
 {
@@ -32,9 +33,9 @@ namespace Chronical.App.Controllers
         }
 
         [HttpPost(Name = "comment")]
-        public ChronicleResponse AddCommentToChapter(CommentDto newComment)
+        public ChronicleResponse<object> AddCommentToChapter(CommentDto newComment)
         {
-            var response = new ChronicleResponse();
+            var response = new ChronicleResponse<object>();
             var errors = new List<string>();
 
             //TODO: CommentDto - Validation

@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class BookRepository : EntityRepository<Book>
+    public class AuthorRepository : EntityRepository<Author>
     {
-        public BookRepository(ChronicleDbContext context) : base(context)
+        public AuthorRepository(ChronicleDbContext dBContext) : base(dBContext)
         {
+
         }
     }
 }

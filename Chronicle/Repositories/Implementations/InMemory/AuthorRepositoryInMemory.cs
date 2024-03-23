@@ -1,5 +1,6 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
+using Chronicle.Entity.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,19 @@ using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
-    public class AuthorRepositoryInMemory : IAuthorRepository
+    public class AuthorRepositoryInMemory : EntityRepository<Author>
     {
         private object _locker = new object();
         private int _identityId = 1;
         private Dictionary<int, Author> _softCopy = new();
         private Dictionary<int, Author> _hardCopy = new();
 
-        public IQueryable<Author> Query
+        public AuthorRepositoryInMemory(ChronicleDbContext context) : base(context)
+        {
+            
+        }
+
+        public new IQueryable<Author> Query
         {
             get { return _softCopy.Values.AsQueryable<Author>(); }
         }

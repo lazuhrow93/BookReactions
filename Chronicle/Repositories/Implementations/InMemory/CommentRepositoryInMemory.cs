@@ -1,6 +1,7 @@
 ﻿using Chronicle.Domain.Database.Interfaces;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
+using Chronicle.Entity.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
@@ -11,10 +12,15 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
-    public class CommentRepositoryInMemory : ICommentRepository
+    public class CommentRepositoryInMemory : EntityRepository<Comment>
     {
         private static Dictionary<int, Comment> _softCopy = new Dictionary<int, Comment>();
         private static Dictionary<int, Comment> _hardCopy = new Dictionary<int, Comment>();
+
+        public CommentRepositoryInMemory(ChronicleDbContext context) : base(context)
+        {
+            
+        }
 
         public IQueryable<Comment> Query
         {

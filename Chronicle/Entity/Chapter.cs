@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Entity
 {
-    public class Chapter : IEntity
+    public class Chapter : Entity<Chapter>
     {
-        public int Id { get; set; }
         public int BookId { get; set; }
         public string? Title { get; set; }
         public int Number { get; set; }

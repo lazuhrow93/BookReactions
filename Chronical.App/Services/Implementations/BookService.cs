@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Chronical.App.Models.Dto;
+using Chronical.App.Models.IncomingDto;
+using Chronical.App.Models.OutogingDto;
 using Chronical.App.Services.Extensions;
 using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Entity;
@@ -23,12 +24,13 @@ namespace Chronical.App.Services.Implementations
             _mapper = mapper;
         }
 
-        public ActionResult AddBook(BookDto newBookDto)
+        public ActionResult<Book> AddBook(BookDto newBookDto)
         {
-            var result = new ActionResult()
+            var result = new ActionResult<Book>()
             {
                 State = State.NotAdded,
-                Errors = new()
+                Errors = new(),
+                Entity = null
             };
 
             var authorDto = newBookDto.Author;
@@ -42,7 +44,38 @@ namespace Chronical.App.Services.Implementations
             newBook.AuthorId = author.Id;
             _bookRepository.Add(newBook);
             _bookRepository.SaveChanges();
+            result.Entity = newBook;
             result.State = State.Added;
+            return result;
+        }
+
+        public ActionResult<BookDetailsDto> GetBook(BookDto book)
+        {
+            var result = new ActionResult<BookDetailsDto>()
+            {
+                State = State.NotFound,
+                Errors = new List<string>(),
+                Entity = null
+            };
+
+            var authorDto = book.Author!;
+            var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
+             
+            if(author is null)
+            {
+                result.Errors.Add("Unable to find that author");
+                return result;
+            }
+
+            var bookFromDb = _bookRepository.FindBookByAuthorAndTitle(author.Id, book.Title!);
+            if (bookFromDb.Any())
+            {
+                var details = _mapper.Map<BookDetailsDto>(bookFromDb.First());
+                details.Author = string.Format("{firstName} {middleName} {LastName}", author.FirstName, author.MiddleName, author.LastName);
+                result.State = State.Found;
+                result.Entity = details;
+            }
+
             return result;
         }
     }

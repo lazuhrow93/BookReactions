@@ -1,16 +1,22 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
+using Chronicle.Entity.Database;
 using CommonLibrary.Extensions;
 
 namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
-    public class BookRepositoryInMemory : IBookRepository
+    public class BookRepositoryInMemory : EntityRepository<Book>
     {
         private object _locker = new object();
         private int _identityId = 1;
 
         private Dictionary<int, Book> _softCopy = new();
         private Dictionary<int, Book> _hardCopy = new();
+
+        public BookRepositoryInMemory(ChronicleDbContext context) : base(context)
+        {
+            
+        }
 
         public IQueryable<Book> Query
         {

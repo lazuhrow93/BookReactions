@@ -1,5 +1,6 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
+using Chronicle.Entity.Database;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,17 @@ using System.Windows.Markup;
 
 namespace Chronicle.Domain.Repositories.Implementations.InMemory
 {
-    public class ChapterRepositoryInMemory : IChapterRepository
+    public class ChapterRepositoryInMemory : EntityRepository<Chapter>
     {
         public object _locker = new();
         private int _identityId = 1;
         private Dictionary<int, Chapter> _softCopy = new Dictionary<int, Chapter>();
         private Dictionary<int, Chapter> _hardCopy = new Dictionary<int, Chapter>();
+
+        public ChapterRepositoryInMemory(ChronicleDbContext context) : base(context)
+        {
+            
+        }
 
         public IQueryable<Chapter> Query
         {

@@ -10,58 +10,10 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : EntityRepository<Comment>
     {
-        private ChronicleDBContext _context { get; set; }
-
-        public IQueryable<Comment> Query
+        public CommentRepository(ChronicleDbContext context) : base(context)
         {
-            get { return _context.Set<Comment>().AsQueryable(); }
-        }
-
-        public CommentRepository(ChronicleDBContext context)
-        {
-            _context = context;
-        }
-
-        public void AddComment(Comment comment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveChanges()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Comment Add(Comment entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(IEnumerable<Comment> entities)
-        {
-            _context.RemoveRange(entities);
-        }
-
-        public void Delete(Comment entity)
-        {
-            _context.Remove<Comment>(entity);
-        }
-
-        public Comment Update(Comment entity)
-        {
-            return _context.Update(entity).Entity;
-        }
-
-        public Comment? Get(int id)
-        {
-            return Query.FirstOrDefault(c => c.Id == id);
-        }
-
-        IEnumerable<Comment> IRepository<Comment>.Add(IEnumerable<Comment> entities)
-        {
-            throw new NotImplementedException();
         }
     }
 }

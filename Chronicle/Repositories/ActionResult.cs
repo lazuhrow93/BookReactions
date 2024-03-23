@@ -10,11 +10,14 @@ namespace Chronicle.Domain.Repositories
     {
         NotAdded,
         Added,
+        NotFound,
+        Found
     }
 
-    public class ActionResult
+    public class ActionResult<T>
     {
         public List<string>? Errors { get; set; }
         public State State { get; set; }
+        public T? Entity { get; set; }
     }
 }

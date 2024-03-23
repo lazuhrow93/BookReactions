@@ -1,4 +1,6 @@
 using Chronical.App.Configuration;
+using Chronicle.Entity.Database;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

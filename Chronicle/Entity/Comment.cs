@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Entity
 {
-    public class Comment : IEntity
+    public class Comment : Entity<Comment>
     {
-        public int Id { get; set; }
         public int BookId { get; set; }
         public string? SubText { get; set; }
         public int ChapterId { get; set; }

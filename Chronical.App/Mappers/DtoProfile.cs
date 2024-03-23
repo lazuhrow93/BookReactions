@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Chronical.App.Models.Dto;
+using Chronical.App.Models.IncomingDto;
+using Chronical.App.Models.OutogingDto;
 using Chronicle.Domain.Entity;
 
 namespace Chronical.App.Mappers
@@ -22,6 +23,9 @@ namespace Chronical.App.Mappers
                 .ForMember(d => d.Title, opt => opt.MapFrom(s => s.Title))
                 .ForMember(d=>d.AuthorId, opt=>opt.Ignore())
                 .IgnoreId();
+
+            CreateMap<Book, BookDetailsDto>()
+                .ForMember(d => d.BookId, opt => opt.MapFrom(s => s.Id));
 
 
         }

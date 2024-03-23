@@ -1,10 +1,9 @@
 ﻿namespace Chronicle.Domain.Entity
 {
-    public class Author : IEntity
+    public class Author : Entity<Author>
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MiddleName { get; set; }
-        public int Id { get; set; }
     }
 }
