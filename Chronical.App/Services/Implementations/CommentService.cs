@@ -46,26 +46,25 @@ namespace Chronical.App.Services.Implementations
             };
         }
 
-        public ActionResult<Comment> AddComment(CommentDto newComment)
+        public RepositoryResult<Comment> AddComment(CommentDto newComment)
         {
             var authorDto = newComment.Chapter.Book!.Author!;
             var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
-            var result = new ActionResult<Comment>()
-            {
-                State = State.NotAdded,
-                Errors = new()
-            };
+            var result = new RepositoryResult<Comment>();
+            result.SetState(State.NotAdded);
 
             if (author is null)
             {
-                result.Errors.Add("The author doesn't exist for this book");
+                result.AddError("The author doesn't exist for this book");
+                result.SetState(State.NotAdded);
                 return result;
             }
 
             var books = _bookRepository.FindBookByAuthorAndTitle(author.Id, newComment.Chapter.Book.Title!);
             if(books.Any())
             {
-                result.Errors.Add("The book doesn't exist under this author");
+                result.AddError("The book doesn't exist under this author");
+                result.SetState(State.NotAdded);
                 return result;
             }
 
@@ -73,7 +72,8 @@ namespace Chronical.App.Services.Implementations
             var chapter = _chapterRepository.GetByBookAndNumber(book.Id, newComment.Chapter.ChapterNumber);
             if(chapter is null)
             {
-                result.Errors.Add("The chapter doesn't exist for this book");
+                result.AddError("The chapter doesn't exist for this book");
+                result.SetState(State.NotAdded);
                 return result;
             }
 
@@ -81,10 +81,10 @@ namespace Chronical.App.Services.Implementations
             var newCommentEntity = _mapper.Map<Comment>(newComment);
             newCommentEntity.BookId = book.Id;
             newCommentEntity.ChapterId = chapter.Id;
-            newCommentEntity.LastUpdate = DateTime.UtcNow;
             _commentRepository.Add(newCommentEntity);
+            _commentRepository.SaveChanges();
             result.Entity = newCommentEntity;
-            result.State = State.Added;
+            result.SetState(State.Added);
             return result;
         }
     }

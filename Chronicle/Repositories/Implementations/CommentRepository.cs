@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class CommentRepository : EntityRepository<Comment>
+    public class CommentRepository : EntityRepository<Comment>, ICommentRepository
     {
         public CommentRepository(ChronicleDbContext context) : base(context)
         {

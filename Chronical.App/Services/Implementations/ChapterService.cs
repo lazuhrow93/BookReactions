@@ -29,22 +29,18 @@ namespace Chronical.App.Services.Implementations
             _mapper = mapper;
         }
 
-        public ActionResult<Chapter> AddChapter(ChapterDto newChapterDto)
+        public RepositoryResult<Chapter> AddChapter(ChapterDto newChapterDto)
         {
-            var result = new ActionResult<Chapter>()
-            {
-                State = State.NotAdded,
-                Errors = new(),
-                Entity = null
-            };
+            var result = new RepositoryResult<Chapter>();
+            result.SetState(State.NotAdded);
 
             var authorDto = newChapterDto.Book!.Author!;
             var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
 
             if(author == null)
             {
-                result.State = State.NotFound;
-                result.Errors.Add("The author doesnt exist for this chapter");
+                result.SetState(State.NotFound);
+                result.AddError("The author doesnt exist for this chapter");
                 return result;
             }
 
@@ -52,8 +48,8 @@ namespace Chronical.App.Services.Implementations
             var book = _bookRepository.FindBookByAuthorAndTitle(author!.Id, bookDto.Title!);
             if(book.Any() == false)
             {
-                result.State = State.NotFound;
-                result.Errors.Add("The book doesnt exist for this chapter");
+                result.SetState(State.NotFound);
+                result.AddError("The book doesnt exist for this chapter");
                 return result;
             }
 
@@ -63,15 +59,15 @@ namespace Chronical.App.Services.Implementations
             var entityEntry = _chapterRepository.Add(newChapter);
             _chapterRepository.SaveChanges();
 
-            if(entityEntry.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            if (entityEntry.State == Microsoft.EntityFrameworkCore.EntityState.Added)
             {
-                result.State = State.Added;
+                result.SetState(State.Added);
                 result.Entity = entityEntry.Entity;
             }
             else
             {
-                result.State = State.NotAdded;
-                result.Errors.Add("Unable to add the chapter for unknown reason");
+                result.SetState(State.NotAdded);
+                result.AddError("Unable to add the chapter for unknown reason");
             }
 
             return result;

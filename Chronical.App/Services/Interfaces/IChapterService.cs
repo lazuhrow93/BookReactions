@@ -6,6 +6,6 @@ namespace Chronical.App.Services.Interfaces
 {
     public interface IChapterService
     {
-        public ActionResult<Chapter> AddChapter(ChapterDto newChapterDto);
+        public RepositoryResult<Chapter> AddChapter(ChapterDto newChapterDto);
     }
 }

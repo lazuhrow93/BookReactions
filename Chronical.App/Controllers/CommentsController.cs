@@ -42,7 +42,7 @@ namespace Chronical.App.Controllers
 
             var result = _commentService.AddComment(newComment);
 
-            response.Success = (result.State == State.Added);
+            response.Success = result.EntityAdded;
             response.Error = result.Errors!.ToArray();
             return response;
         }

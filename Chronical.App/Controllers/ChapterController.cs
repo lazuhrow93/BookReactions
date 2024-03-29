@@ -26,11 +26,10 @@ namespace Chronical.App.Controllers
         public ChronicleResponse<object> AddChapter(ChapterDto newChapter)
         {
             var response = new ChronicleResponse<object>();
-            var errors = new List<string>();
 
             var result = _chapterService.AddChapter(newChapter);
 
-            response.Success = result.State == State.Added;
+            response.Success = result.EntityAdded;
             response.Error = result.Errors!.ToArray();
             return response;
         }

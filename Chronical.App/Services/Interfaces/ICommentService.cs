@@ -8,7 +8,7 @@ namespace Chronical.App.Services.Interfaces
 {
     public interface ICommentService
     {
-        public ActionResult<Comment> AddComment(CommentDto newComment);
+        public RepositoryResult<Comment> AddComment(CommentDto newComment);
         public ChapterCommentsDto UnderChapter(int chapterId); 
     }
 }

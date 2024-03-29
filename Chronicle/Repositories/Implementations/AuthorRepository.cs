@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class AuthorRepository : EntityRepository<Author>
+    public class AuthorRepository : EntityRepository<Author>, IAuthorRepository
     {
         public AuthorRepository(ChronicleDbContext dBContext) : base(dBContext)
         {

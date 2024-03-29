@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class BookRepository : EntityRepository<Book>
+    public class BookRepository : EntityRepository<Book>, IBookRepository
     {
         public BookRepository(ChronicleDbContext context) : base(context)
         {

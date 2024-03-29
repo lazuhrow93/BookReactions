@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Chronicle.Domain.Repositories;
 using Chronical.App.Models.OutgoingDto;
 using Chronical.App.Models.OutogingDto;
+using AutoMapper;
 
 namespace Chronical.App.Controllers
 {
@@ -14,13 +15,15 @@ namespace Chronical.App.Controllers
     public partial class BookController
     {
         private IBookService _bookService;
+        private IMapper _mapper;
 
-        public BookController(IBookService bookservice)
+        public BookController(IBookService bookservice, IMapper mapper)
         {
+            _mapper = mapper;
             _bookService = bookservice;
         }
 
-        [HttpPost("book")]
+        [HttpPost("Book")]
         public ChronicleResponse<object?> AddBook(BookDto newBookDto)
         {
             var response = new ChronicleResponse<object>();
@@ -28,20 +31,20 @@ namespace Chronical.App.Controllers
             var result = _bookService.AddBook(newBookDto);
 
             response.Data = null;
-            response.Success = (result.State == State.Added);
+            response.Success = result.EntityAdded;
             response.Error = result.Errors!.ToArray();
-            return response;
+            return response!;
         }
 
-        [HttpGet("book")]
+        [HttpPost("GetBook")]
         public ChronicleResponse<BookDetailsDto> GetBook(BookDto book)
         {
             var response = new ChronicleResponse<BookDetailsDto>();
 
             var result = _bookService.GetBook(book);
-            response.Success = (result.State == State.Found);
+            response.Success = result.EntityFound;
             response.Error = result.Errors!.ToArray();
-            response.Data = result.Entity;
+            response.Data = _mapper.Map<BookDetailsDto>(result.Entity);
             return response;
         }
     }

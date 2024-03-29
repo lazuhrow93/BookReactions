@@ -11,13 +11,7 @@ namespace Chronical.App.Configuration
 {
     public static class Domain
     {
-        private static AppSettings appsettings;
-
-        public static WebApplicationBuilder AppSettings(this WebApplicationBuilder webAppBuilder)
-        {
-            appsettings = webAppBuilder.Configuration.Get<AppSettings>();
-            return webAppBuilder;
-        }
+        public static AppSettings appsettings;
 
         public static IServiceCollection ConfigureDomain(this IServiceCollection services)
         {
@@ -27,20 +21,27 @@ namespace Chronical.App.Configuration
             return services;
         }
 
+        public static WebApplicationBuilder AppSettings(this WebApplicationBuilder webAppBuilder)
+        {
+            appsettings = webAppBuilder.Configuration.Get<AppSettings>();
+            return webAppBuilder;
+        }
+
         private static IServiceCollection ConfigureDb(this IServiceCollection services)
         {
             services.AddDbContext<ChronicleDbContext>(
-                opt => opt.UseInMemoryDatabase(appsettings.ConnectionString!.DbName!)
+                opt => opt.UseInMemoryDatabase("TestDb")
                 );
             return services;
         }
 
         private static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IRepository<Comment>, CommentRepository>();
-            services.AddSingleton<IRepository<Chapter>, ChapterRepository>();
-            services.AddSingleton<IRepository<Book>, BookRepository>();
-            services.AddSingleton<IRepository<Author>, AuthorRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>()
+                .AddScoped<IChapterRepository, ChapterRepository>()
+                .AddScoped<IBookRepository, BookRepository>()
+                .AddScoped<IAuthorRepository, AuthorRepository>()
+                .AddScoped<ICharacterRepository, CharacterRepository>();
 
             return services;
         }

@@ -4,7 +4,7 @@ using Chronicle.Entity.Database;
 
 namespace Chronicle.Domain.Repositories.Implementations
 {
-    public class ChapterRepository : EntityRepository<Chapter>
+    public class ChapterRepository : EntityRepository<Chapter>, IChapterRepository
     {
         public ChapterRepository(ChronicleDbContext context) : base(context)
         {

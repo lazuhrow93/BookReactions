@@ -24,20 +24,17 @@ namespace Chronical.App.Services.Implementations
             _mapper = mapper;
         }
 
-        public ActionResult<Book> AddBook(BookDto newBookDto)
+        public RepositoryResult<Book> AddBook(BookDto newBookDto)
         {
-            var result = new ActionResult<Book>()
-            {
-                State = State.NotAdded,
-                Errors = new(),
-                Entity = null
-            };
+            var result = new RepositoryResult<Book>();
+            result.SetState(State.NotAdded);
 
             var authorDto = newBookDto.Author;
             var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
             if (author is null)
             {
-                result.Errors.Add("The author doesn't exist for this book");
+                result.Errors.Add("The author doesn't exist");
+                return result;
             }
 
             var newBook = _mapper.Map<Book>(newBookDto);
@@ -45,37 +42,34 @@ namespace Chronical.App.Services.Implementations
             _bookRepository.Add(newBook);
             _bookRepository.SaveChanges();
             result.Entity = newBook;
-            result.State = State.Added;
+            result.SetState(State.Added);
             return result;
         }
 
-        public ActionResult<BookDetailsDto> GetBook(BookDto book)
+        public RepositoryResult<Book> GetBook(BookDto book)
         {
-            var result = new ActionResult<BookDetailsDto>()
-            {
-                State = State.NotFound,
-                Errors = new List<string>(),
-                Entity = null
-            };
+            var result = new RepositoryResult<Book>();
+            result.SetState(State.NotFound);
 
             var authorDto = book.Author!;
             var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
              
             if(author is null)
             {
-                result.Errors.Add("Unable to find that author");
+                result.AddError("Unable to find that author");
                 return result;
             }
 
             var bookFromDb = _bookRepository.FindBookByAuthorAndTitle(author.Id, book.Title!);
-            if (bookFromDb.Any())
+            if (bookFromDb.Any() == false)
             {
-                var details = _mapper.Map<BookDetailsDto>(bookFromDb.First());
-                details.Author = string.Format("{firstName} {middleName} {LastName}", author.FirstName, author.MiddleName, author.LastName);
-                result.State = State.Found;
-                result.Entity = details;
+                result.SetState(State.NotFound);
+                result.AddError("Unable to find that book");
+                return result;
             }
 
+            result.SetState(State.Found);
+            result.Entity = bookFromDb.First();
             return result;
         }
     }

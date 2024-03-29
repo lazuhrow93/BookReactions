@@ -1,5 +1,6 @@
 ﻿using Chronical.App.Services.Implementations;
 using Chronical.App.Services.Interfaces;
+using Chronicle.Domain.Repositories.Interfaces;
 
 namespace Chronical.App.Configuration
 {
@@ -7,8 +8,8 @@ namespace Chronical.App.Configuration
     {
         public static IServiceCollection ConfigureApp(this IServiceCollection services)
         {
-            services.ConfigurePackages();
-            services.ConfigureServices();
+            services.ConfigurePackages()
+                .ConfigureServices();
             return services;
         }
 
@@ -20,9 +21,11 @@ namespace Chronical.App.Configuration
 
         private static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
-            services.AddSingleton<ICommentService, CommentService>();
-            services.AddSingleton<IChapterService, ChapterService>();
-            services.AddSingleton<IBookService, BookService>();
+            services.AddScoped<IAuthorService, AuthorService>()
+                .AddScoped<ICommentService, CommentService>()
+                .AddScoped<IChapterService, ChapterService>()
+                .AddScoped<IBookService, BookService>()
+                .AddScoped<ICharacterService, CharacterService>();
             return services;
         }
     }
