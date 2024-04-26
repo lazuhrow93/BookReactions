@@ -80,7 +80,7 @@ namespace Chronical.App.Services.Implementations
         public RepositoryResult<BookCommentsDetailsDto> GetAllCommentsForBook(int bookId)
         {
             var result = new RepositoryResult<BookCommentsDetailsDto>();
-            result.SetState(State.NotAdded);
+            result.SetState(State.NotFound);
 
             var book = _bookRepository.Get(bookId);
             if(book is null)
@@ -92,7 +92,7 @@ namespace Chronical.App.Services.Implementations
             var outgoingDto = new BookCommentsDetailsDto();
             outgoingDto = _mapper.Map<BookCommentsDetailsDto>(book);
 
-            var comments = _commentRepository.GetByBook(bookId);
+            var comments = _commentRepository.Find(c => c.BookId == bookId);
             if(comments?.Any() != true)
             {
                 result.Entity = outgoingDto;
@@ -107,12 +107,14 @@ namespace Chronical.App.Services.Implementations
             foreach(var characterId in characterIds)
             {
                 var character = _characterRepository.Get(characterId);
-                outgoingDto.Comments.Add(new CharacterCommentsDto()
-                {
-                    CharacterId = character!.Id,
-                    CharacterName = character.FullName,
-                    Comments = _mapper.Map<List<CommentDto>>(commentsByCharacterId[characterId])
-                });
+                var characterCommentsDto = _mapper.Map<CharacterCommentsDto>(character);
+                characterCommentsDto.Comments = _mapper.Map<List<CommentDto>>(commentsByCharacterId[characterId].ToList());
+                //outgoingDto.Comments.Add(new CharacterCommentsDto()
+                //{
+                //    CharacterId = character!.Id,
+                //    CharacterName = character.FullName,
+                //    Comments = _mapper.Map<List<CommentDto>>(commentsByCharacterId[characterId])
+                //});
             }
 
             return result;

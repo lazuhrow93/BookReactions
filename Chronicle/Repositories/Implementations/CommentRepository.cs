@@ -23,7 +23,7 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public IEnumerable<Comment> GetByBook(int bookId)
         {
-            return Query.Where(c => c.BookId == bookId);
+            return Query.Where(c => c.BookId == bookId).AsEnumerable();
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -59,6 +60,11 @@ namespace Chronicle.Domain.Repositories.Implementations
         public EntityEntry<T> Update(T entity)
         {
             return _context.Update(entity);
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return Query.Where(predicate).AsEnumerable();
         }
 
         public int SaveChanges()

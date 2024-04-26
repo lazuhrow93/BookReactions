@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Chronical.App.Models.IncomingDto;
+using Chronical.App.Models.OutgoingDto;
 using Chronical.App.Models.OutogingDto;
 using Chronicle.Domain.Entity;
 
@@ -32,6 +33,10 @@ namespace Chronical.App.Mappers
                 .ForMember(d => d.ChapterNumber, opt => opt.MapFrom(s => s.ChapterNumber))
                 .IgnoreId();
 
+            CreateMap<Comment, CommentDto>()
+                .ForMember(d => d.ChapterNumber, opt => opt.MapFrom(s => s.ChapterNumber))
+                .ForMember(d => d.Text, opt => opt.MapFrom(s => s.Value));
+
             #endregion
 
             #region Book
@@ -52,6 +57,11 @@ namespace Chronical.App.Mappers
                 .IgnoreId()
                 .ForMember(d => d.FullName, opt => opt.MapFrom(s => s.Name))
                 .ForMember(d => d.BookId, opt => opt.MapFrom(s => s.BookId));
+
+            CreateMap<Character, CharacterCommentsDto>()
+                .ForMember(d => d.CharacterId, opt => opt.MapFrom(s => s.Id))
+                .ForMember(d => d.CharacterName, opt => opt.MapFrom(s => s.FullName))
+                .ForMember(d => d.Comments, opt => opt.Ignore());
 
             #endregion
         }
