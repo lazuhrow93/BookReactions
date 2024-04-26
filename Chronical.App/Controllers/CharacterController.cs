@@ -18,52 +18,23 @@ namespace Chronical.App.Controllers
         }
 
         [HttpGet]
-        public ChronicleResponse<List<Character>> GetCharacters([FromQuery] CharacterDto dto)
+        [Route("book/{bookId}")]
+        public ChronicleResponse<List<Character>> GetCharacters(int bookId)
         {
+            var repoResult = _characterService.GetAllCharactersByBook(bookId);
+
             var response = new ChronicleResponse<List<Character>>();
-
-            var repoResult = _characterService.GetCharacters(dto);
-
-            response.Success = repoResult.EntityFound;
-            response.Error = repoResult.Errors.ToArray();
-            response.Data = repoResult.Entity;
-
-            return response;
-        }
-
-        [HttpGet]
-        [Route("book")]
-        public ChronicleResponse<List<Character>> GetAllForBook([FromQuery] int bookid)
-        {
-            var response = new ChronicleResponse<List<Character>>();
-
-            var result = _characterService.GetAllCharactersByBook(bookid);
-
-            if(result.EntityFound == false)
-            {
-                if (response.Error?.Any() == true) response.Success = !(response.Error?.Any() == true);
-            }
-            else
-            {
-                response.Success = true;
-            }
-
-            response.Error = result.Errors.ToArray();
-            response.Data = result.Entity;
+            response.ForLookup(repoResult);
             return response;
         }
 
         [HttpPost]
         public ChronicleResponse<Character> AddCharacter(CharacterDto dto)
         {
-            var response = new ChronicleResponse<Character>();
-
             var repoResult = _characterService.AddCharacter(dto);
 
-            response.Success = repoResult.EntityAdded;
-            response.Error = repoResult.Errors.ToArray();
-            response.Data = repoResult.Entity;
-
+            var response = new ChronicleResponse<Character>();
+            response.ForAdd(repoResult);
             return response;
         }
     }

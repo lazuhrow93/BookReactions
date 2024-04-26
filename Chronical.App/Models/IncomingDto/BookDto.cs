@@ -5,7 +5,7 @@ namespace Chronical.App.Models.IncomingDto
     public class BookDto
     {
         [Required]
-        public AuthorDto? Author { get; set; }
+        public int AuthorId { get; set; }
         [Required]
         public string? Title { get; set; }
     }

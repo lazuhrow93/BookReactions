@@ -21,14 +21,15 @@ namespace Chronical.App.Mappers
             CreateMap<ChapterDto, Chapter>()
                 .ForMember(d => d.Title, opt => opt.MapFrom(s => s.Title))
                 .ForMember(d => d.Number, opt => opt.MapFrom(s => s.ChapterNumber))
+                .ForMember(d => d.BookId, opt => opt.MapFrom(s => s.BookId))
                 .IgnoreId();
 
             #endregion
 
             #region Comment
 
-            CreateMap<CommentDto, Comment>()
-                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Comment))
+            CreateMap<AddCommentDto, Comment>()
+                .ForMember(d => d.ChapterNumber, opt => opt.MapFrom(s => s.ChapterNumber))
                 .IgnoreId();
 
             #endregion

@@ -4,7 +4,6 @@ using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
-using SpicyWing.Extensions;
 
 namespace Chronical.App.Services.Implementations
 {
@@ -67,30 +66,6 @@ namespace Chronical.App.Services.Implementations
             repoResult.Entity = allCharacters.ToList();
             return repoResult;
 
-        }
-
-        public RepositoryResult<List<Character>> GetCharacters(CharacterDto dto)
-        {
-            var repoResult = new RepositoryResult<List<Character>>();
-            repoResult.SetState(State.NotFound);
-
-            var bookDoesNotExists = (_bookRepository.Get(dto.BookId) == null);
-            if (bookDoesNotExists)
-            {
-                repoResult.AddError(string.Format("Unable to find that book {0}", dto.BookId));
-                return repoResult;
-            }
-
-            var character = _characterRepository.GetByBook(dto.BookId).ToArray();
-            repoResult.Entity = character.ToList();
-            if(character.IsNullOrEmpty())
-            {
-                repoResult.AddError(string.Format("Unable to find any characters with name {0} in the book {1}", dto.Name, dto.BookId));
-                return repoResult;
-            }
-
-            repoResult.SetState(State.Found);
-            return repoResult;
         }
     }
 }

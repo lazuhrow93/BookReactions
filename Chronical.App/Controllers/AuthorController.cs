@@ -1,6 +1,7 @@
 ﻿using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models.OutgoingDto;
 using Chronical.App.Services.Interfaces;
+using Chronicle.Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,28 +19,22 @@ namespace Chronical.App.Controllers
         }
 
         [HttpPost]
-        [Route("author")]
-        public ChronicleResponse<object> AddAuthor(AuthorDto dto)
+        public ChronicleResponse<Author> AddAuthor(AuthorDto dto)
         {
-            var response = new ChronicleResponse<object>();
             var result = _authorService.AddAuthor(dto);
 
-            response.Success = result.EntityAdded;
-            response.Error = result.Errors.ToArray();
-            response.Data = result.Entity;
+            var response = new ChronicleResponse<Author>();
+            response.ForAdd(result);
             return response;
         }
 
         [HttpGet]
-        [Route("author")]
-        public ChronicleResponse<object> Get([FromQuery] AuthorDto dto)
+        public ChronicleResponse<Author> Get([FromQuery] AuthorDto dto)
         {
-            var response = new ChronicleResponse<object>();
             var result = _authorService.GetAuthor(dto);
-            response.Success = result.EntityFound;
-            response.Data = result.Entity;
-            response.Error = result.Errors.ToArray();
 
+            var response = new ChronicleResponse<Author>();
+            response.ForLookup(result);
             return response;
         }
     }

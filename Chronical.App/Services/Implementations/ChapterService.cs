@@ -34,19 +34,8 @@ namespace Chronical.App.Services.Implementations
             var result = new RepositoryResult<Chapter>();
             result.SetState(State.NotAdded);
 
-            var authorDto = newChapterDto.Book!.Author!;
-            var author = _authorRepository.GetByFullName(authorDto.FirstName!, authorDto.MiddleName!, authorDto.LastName!);
-
-            if(author == null)
-            {
-                result.SetState(State.NotFound);
-                result.AddError("The author doesnt exist for this chapter");
-                return result;
-            }
-
-            var bookDto = newChapterDto.Book;
-            var book = _bookRepository.FindBookByAuthorAndTitle(author!.Id, bookDto.Title!);
-            if(book.Any() == false)
+            var book = _bookRepository.Get(newChapterDto.BookId);
+            if(book is null)
             {
                 result.SetState(State.NotFound);
                 result.AddError("The book doesnt exist for this chapter");
@@ -54,15 +43,14 @@ namespace Chronical.App.Services.Implementations
             }
 
             var newChapter = _mapper.Map<Chapter>(newChapterDto);
-            newChapter.BookId = book.First().Id;
 
             var entityEntry = _chapterRepository.Add(newChapter);
-            _chapterRepository.SaveChanges();
 
             if (entityEntry.State == Microsoft.EntityFrameworkCore.EntityState.Added)
             {
                 result.SetState(State.Added);
                 result.Entity = entityEntry.Entity;
+                _chapterRepository.SaveChanges();
             }
             else
             {

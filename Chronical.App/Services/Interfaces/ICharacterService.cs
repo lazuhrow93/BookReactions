@@ -8,8 +8,6 @@ namespace Chronical.App.Services.Interfaces
     {
         public RepositoryResult<Character> AddCharacter(CharacterDto character);
 
-        public RepositoryResult<List<Character>> GetCharacters(CharacterDto dto);
-
         public RepositoryResult<List<Character>> GetAllCharactersByBook(int bookId);
     }
 }

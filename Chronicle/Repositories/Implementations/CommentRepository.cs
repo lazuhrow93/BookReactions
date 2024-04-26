@@ -15,5 +15,15 @@ namespace Chronicle.Domain.Repositories.Implementations
         public CommentRepository(ChronicleDbContext context) : base(context)
         {
         }
+
+        public IEnumerable<Comment> Find(Func<Comment, bool> predicate)
+        {
+            return Query.Where(predicate);
+        }
+
+        public IEnumerable<Comment> GetByBook(int bookId)
+        {
+            return Query.Where(c => c.BookId == bookId);
+        }
     }
 }

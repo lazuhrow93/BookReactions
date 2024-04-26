@@ -1,6 +1,7 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Entity.Database;
+using CommonLibrary.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace Chronicle.Domain.Repositories.Implementations
         public CharacterRepository(ChronicleDbContext context) : base(context)
         {
             
+        }
+
+        public Character? FindByBook(int bookId, string name)
+        {
+            var charsInBook = Query.Where(c => c.BookId == bookId);
+            return charsInBook.FirstOrDefault(c => c.FullName != null && c.FullName!.Like(name));
+
         }
 
         public IEnumerable<Character> GetByBook(int bookId)

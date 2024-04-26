@@ -2,12 +2,13 @@
 using Chronical.App.Models.OutogingDto;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
+using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 
 namespace Chronical.App.Services.Interfaces
 {
     public interface IBookService
     {
         public RepositoryResult<Book> AddBook(BookDto newBookDto);
-        public RepositoryResult<Book> GetBook(BookDto book);
+        public RepositoryResult<Book> GetBook(int bookId);
     }
 }

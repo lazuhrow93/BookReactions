@@ -9,5 +9,7 @@ namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface ICommentRepository : IRepository<Comment>
     {
+        public IEnumerable<Comment> GetByBook(int bookId);
+        public IEnumerable<Comment> Find(Func<Comment, bool> predicate);
     }
 }

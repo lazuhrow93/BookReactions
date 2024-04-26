@@ -2,6 +2,7 @@
 using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models.OutgoingDto;
 using Chronical.App.Services.Interfaces;
+using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,14 +24,13 @@ namespace Chronical.App.Controllers
         }
 
         [HttpPost(Name = "chapter")]
-        public ChronicleResponse<object> AddChapter(ChapterDto newChapter)
+        public ChronicleResponse<Chapter> AddChapter(ChapterDto newChapter)
         {
-            var response = new ChronicleResponse<object>();
-
             var result = _chapterService.AddChapter(newChapter);
 
-            response.Success = result.EntityAdded;
-            response.Error = result.Errors!.ToArray();
+            var response = new ChronicleResponse<Chapter>();
+            response.ForAdd(result);
+            
             return response;
         }
     }
