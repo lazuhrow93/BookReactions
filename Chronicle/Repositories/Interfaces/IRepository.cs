@@ -1,17 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Chronicle.Domain.Entity;
 
 namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface IRepository<TEntity>
-        where TEntity : class
+        where TEntity : Entity<TEntity>
     {
         public IQueryable<TEntity> Query { get; }
+        public IEnumerable<TEntity> FetchAll();
         public TEntity? Get(int id);
         public EntityEntry<TEntity> Add(TEntity entity);
         public IEnumerable<EntityEntry<TEntity>> Add(IEnumerable<TEntity> entities);
