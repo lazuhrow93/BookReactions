@@ -23,10 +23,5 @@ namespace Chronical.App.Models.OutgoingDto
             this.Success = result.EntityFound;
             return this;
         }
-
-        public ChronicleResponse<TDto> ForLookUp<T, TDto>(RepositoryResult<T> result)
-        {
-
-        }
     }
 }

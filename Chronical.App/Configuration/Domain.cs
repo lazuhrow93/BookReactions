@@ -1,8 +1,4 @@
-﻿using Chronical.App.Services.Implementations;
-using Chronical.App.Services.Interfaces;
-using Chronicle.Domain.Entity;
-using Chronicle.Domain.Repositories.Implementations;
-using Chronicle.Domain.Repositories.Implementations.InMemory;
+﻿using Chronicle.Domain.Repositories.Implementations;
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Entity.Database;
 using Microsoft.EntityFrameworkCore;
