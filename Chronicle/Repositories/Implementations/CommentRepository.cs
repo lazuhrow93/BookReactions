@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +14,11 @@ namespace Chronicle.Domain.Repositories.Implementations
     {
         public CommentRepository(ChronicleDbContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Comment> Find(Func<Comment, bool> predicate)
+        {
+            return Query.Where(predicate);
         }
 
         public IEnumerable<Comment> GetByBook(int bookId)
