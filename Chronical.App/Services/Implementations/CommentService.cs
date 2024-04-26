@@ -92,6 +92,7 @@ namespace Chronical.App.Services.Implementations
             var outgoingDto = new BookCommentsDetailsDto();
             outgoingDto = _mapper.Map<BookCommentsDetailsDto>(book);
 
+            var testcomments = _commentRepository.FetchAll();
             var comments = _commentRepository.Find(c => c.BookId == bookId);
             if(comments?.Any() != true)
             {

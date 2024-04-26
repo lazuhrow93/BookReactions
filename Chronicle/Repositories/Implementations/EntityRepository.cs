@@ -26,6 +26,11 @@ namespace Chronicle.Domain.Repositories.Implementations
             get { return _context.Set<T>().AsQueryable(); }
         }
 
+        public IEnumerable<T> FetchAll()
+        {
+            return Query.AsEnumerable();
+        }
+
         public EntityEntry<T> Add(T entity)
         {
             return _context.Add(entity);
