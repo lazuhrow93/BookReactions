@@ -13,7 +13,7 @@ namespace Chronical.App.Controllers
     [ApiController]
     [Route("[Controller]")]
 
-    public partial class BookController
+    public class BookController
     {
         private IBookService _bookService;
 
@@ -34,9 +34,9 @@ namespace Chronical.App.Controllers
 
         [HttpGet]
         [Route("{bookId}")]
-        public ChronicleResponse<Book> GetBook(int book)
+        public ChronicleResponse<Book> GetBook(int bookId)
         {
-            var result = _bookService.GetBook(book);
+            var result = _bookService.GetBook(bookId);
 
             var response = new ChronicleResponse<Book>();
             response.ForLookup(result);
