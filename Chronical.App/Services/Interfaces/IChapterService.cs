@@ -7,5 +7,6 @@ namespace Chronical.App.Services.Interfaces
     public interface IChapterService
     {
         public RepositoryResult<Chapter> AddChapter(ChapterDto newChapterDto);
+        public RepositoryResult<IEnumerable<Chapter>> AddChapter(IEnumerable<ChapterDto> newChapterDto);
     }
 }

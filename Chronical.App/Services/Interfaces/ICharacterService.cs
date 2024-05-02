@@ -7,6 +7,7 @@ namespace Chronical.App.Services.Interfaces
     public interface ICharacterService
     {
         public RepositoryResult<Character> AddCharacter(CharacterDto character);
+        public RepositoryResult<IEnumerable<Character>> AddCharacter(IEnumerable<CharacterDto> characters);
 
         public RepositoryResult<List<Character>> GetAllCharactersByBook(int bookId);
     }

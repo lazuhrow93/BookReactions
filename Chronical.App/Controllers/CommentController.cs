@@ -34,7 +34,7 @@ namespace Chronical.App.Controllers
 
         [HttpPost]
         [Route("book/character")]
-        public ChronicleResponse<Comment> AddCommentForCharacter(AddCommentDto newComment)
+        public ChronicleResponse<Comment> AddCommentForCharacter(CommentDto newComment)
         {
             var serviceResult = _commentService.AddCommentForCharacter(newComment);
 

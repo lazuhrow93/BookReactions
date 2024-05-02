@@ -60,5 +60,30 @@ namespace Chronical.App.Services.Implementations
 
             return result;
         }
+
+        public RepositoryResult<IEnumerable<Chapter>> AddChapter(IEnumerable<ChapterDto> newChapterDtos)
+        {
+            var result = new RepositoryResult<IEnumerable<Chapter>>();
+            result.SetState(State.NotAdded);
+
+            var newChapter = _mapper.Map<List<Chapter>>(newChapterDtos);
+
+            var entityEntries = _chapterRepository.Add(newChapter);
+
+            if (entityEntries.All(e=>e.State == Microsoft.EntityFrameworkCore.EntityState.Added))
+            {
+                result.SetState(State.Added);
+                result.Entity = entityEntries.Select(e=>e.Entity).AsEnumerable();
+                _chapterRepository.SaveChanges();
+            }
+            else
+            {
+                result.SetState(State.NotAdded);
+                result.AddError("Unable to add the chapter for unknown reason");
+            }
+
+            return result;
+
+        }
     }
 }

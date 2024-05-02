@@ -48,6 +48,25 @@ namespace Chronical.App.Services.Implementations
             return repoResult;
         }
 
+        public RepositoryResult<IEnumerable<Character>> AddCharacter(IEnumerable<CharacterDto> characters)
+        {
+            var repoResult = new RepositoryResult<IEnumerable<Character>>();
+            repoResult.SetState(State.NotAdded);
+
+            var character = _mapper.Map<List<Character>>(characters);
+            var result = _characterRepository.Add(character);
+            if (result.All(e=>e.State == Microsoft.EntityFrameworkCore.EntityState.Added))
+            {
+                repoResult.SetState(State.Added);
+                repoResult.Entity = result.Select(e=>e.Entity).AsEnumerable();
+            }
+            else
+                repoResult.AddError("Unable to add the Character for unknown reason");
+
+            _characterRepository.SaveChanges();
+            return repoResult;
+        }
+
         public RepositoryResult<List<Character>> GetAllCharactersByBook(int bookId)
         {
             var repoResult = new RepositoryResult<List<Character>>();

@@ -4,6 +4,6 @@
     {
         public string? CharacterName { get; set; }
         public int CharacterId { get; set; }
-        public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
+        public List<CommentDetailsDto> Comments { get; set; } = new List<CommentDetailsDto>();
     }
 }

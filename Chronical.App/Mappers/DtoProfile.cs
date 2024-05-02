@@ -29,11 +29,11 @@ namespace Chronical.App.Mappers
 
             #region Comment
 
-            CreateMap<AddCommentDto, Comment>()
+            CreateMap<CommentDto, Comment>()
                 .ForMember(d => d.ChapterNumber, opt => opt.MapFrom(s => s.ChapterNumber))
                 .IgnoreId();
 
-            CreateMap<Comment, CommentDto>()
+            CreateMap<Comment, CommentDetailsDto>()
                 .ForMember(d => d.ChapterNumber, opt => opt.MapFrom(s => s.ChapterNumber))
                 .ForMember(d => d.Text, opt => opt.MapFrom(s => s.Value));
 

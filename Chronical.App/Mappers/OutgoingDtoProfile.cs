@@ -12,7 +12,7 @@ namespace Chronical.App.Mappers
                 .ForMember(d => d.BookId, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Comments, opt => opt.Ignore());
 
-            CreateMap<Comment, CommentDto>()
+            CreateMap<Comment, CommentDetailsDto>()
                 .ForMember(d => d.Text, opt => opt.MapFrom(s => s.Value));
         }
     }

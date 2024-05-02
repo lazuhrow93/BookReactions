@@ -40,7 +40,7 @@ namespace Chronicle.Domain.Repositories.Implementations
         {
             foreach(var entity in entities)
             {
-                yield return Add(entity);
+                yield return _context.Add(entity);
             }
         }
 

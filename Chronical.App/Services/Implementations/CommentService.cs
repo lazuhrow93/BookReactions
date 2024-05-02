@@ -54,7 +54,7 @@ namespace Chronical.App.Services.Implementations
             return repoResult;
         }
 
-        public RepositoryResult<Comment> AddCommentForCharacter(AddCommentDto dto)
+        public RepositoryResult<Comment> AddCommentForCharacter(CommentDto dto)
         {
             var result = new RepositoryResult<Comment>();
             result.SetState(State.NotAdded);
@@ -77,6 +77,20 @@ namespace Chronical.App.Services.Implementations
             return result;
         }
 
+        public RepositoryResult<IEnumerable<Comment>> AddCommentForCharacter(IEnumerable<CommentDto> dto)
+        {
+            var result = new RepositoryResult<IEnumerable<Comment>>();
+            result.SetState(State.NotAdded);
+
+            var newComment = _mapper.Map<IEnumerable<Comment>>(dto);
+
+            var entityEntry = _commentRepository.Add(newComment);
+            _commentRepository.SaveChanges();
+            result.SetState(State.Added);
+            result.Entity = entityEntry.Select(e=>e.Entity).AsEnumerable();
+            return result;
+        }
+
         public RepositoryResult<BookCommentsDetailsDto> GetAllCommentsForBook(int bookId)
         {
             var result = new RepositoryResult<BookCommentsDetailsDto>();
@@ -92,7 +106,7 @@ namespace Chronical.App.Services.Implementations
             var outgoingDto = new BookCommentsDetailsDto();
             outgoingDto = _mapper.Map<BookCommentsDetailsDto>(book);
 
-            var testcomments = _commentRepository.FetchAll();
+            var testcomments = _commentRepository.FetchAll(); //NEED TO FIGRE OUT WHY ITS NOT FETCHING ALL
             var comments = _commentRepository.Find(c => c.BookId == bookId);
             if(comments?.Any() != true)
             {
@@ -109,7 +123,7 @@ namespace Chronical.App.Services.Implementations
             {
                 var character = _characterRepository.Get(characterId);
                 var characterCommentsDto = _mapper.Map<CharacterCommentsDto>(character);
-                characterCommentsDto.Comments = _mapper.Map<List<CommentDto>>(commentsByCharacterId[characterId].ToList());
+                characterCommentsDto.Comments = _mapper.Map<List<CommentDetailsDto>>(commentsByCharacterId[characterId].ToList());
                 //outgoingDto.Comments.Add(new CharacterCommentsDto()
                 //{
                 //    CharacterId = character!.Id,

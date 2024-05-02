@@ -1,4 +1,5 @@
 ﻿using Chronical.App.Helper;
+using Chronical.App.Services.Interfaces;
 using Chronicle.Domain.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +12,13 @@ namespace Chronical.App.Controllers
         private Seed _dataSeeder;
 
         public HelperController(
-           IAuthorRepository authorRepository,
-           IBookRepository bookRepository,
-           IChapterRepository chapterRepository,
-           ICharacterRepository characterRepository,
-           ICommentRepository commentRepository)
+            IAuthorService authorService,
+            IBookService bookSerivce,
+            IChapterService chapterService,
+            ICharacterService characterService,
+            ICommentService commentService)
         {
-            _dataSeeder = new(authorRepository, bookRepository, chapterRepository, characterRepository, commentRepository);
+            _dataSeeder = new(authorService, bookSerivce, chapterService, characterService, commentService);
         }
 
         [HttpGet]
