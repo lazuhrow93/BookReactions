@@ -40,7 +40,6 @@ namespace Chronicle.Tests.UnitTests.Services
 
             result
                 .AssertEntityFound();
-
         } 
     }
 }
