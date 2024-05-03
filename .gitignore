@@ -25,3 +25,8 @@
 /Chronicle.Tests
 /Chronicle.Tests.Utility/bin/Debug/net6.0
 /Chronicle.Tests.Utility/obj/Debug/net6.0
+/Chronicle.Tests/obj/Debug/net6.0/Chronicle.Tests.csproj.AssemblyReference.cache
+/Chronicle.Tests/obj/Debug/net6.0/Chronicle.Tests.assets.cache
+/Chronicle.Tests/obj/Chronicle.Tests.csproj.nuget.dgspec.json
+/Chronicle.Tests/obj/project.nuget.cache
+/Chronicle.Tests/obj/project.assets.json
