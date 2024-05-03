@@ -30,3 +30,8 @@
 /Chronicle.Tests/obj/Chronicle.Tests.csproj.nuget.dgspec.json
 /Chronicle.Tests/obj/project.nuget.cache
 /Chronicle.Tests/obj/project.assets.json
+/Chronicle.Tests.Utility/obj/Debug/net6.0/Chronicle.Tests.Utility.assets.cache
+/Chronicle.Tests.Utility/obj/Chronicle.Tests.Utility.csproj.nuget.dgspec.json
+/Chronicle.Tests.Utility/obj/project.assets.json
+/Chronicle.Tests.Utility/obj/project.nuget.cache
+/Chronicle.Tests/obj/Chronicle.Tests.csproj.nuget.g.props
