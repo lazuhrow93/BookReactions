@@ -10,7 +10,7 @@ namespace Chronical.App.Mappers
         {
             CreateMap<Book, BookCommentsDetailsDto>()
                 .ForMember(d => d.BookId, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.Comments, opt => opt.Ignore());
+                .ForMember(d => d.CharacterComments, opt => opt.Ignore());
 
             CreateMap<Comment, CommentDetailsDto>()
                 .ForMember(d => d.Text, opt => opt.MapFrom(s => s.Value));

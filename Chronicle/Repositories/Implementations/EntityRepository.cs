@@ -38,10 +38,12 @@ namespace Chronicle.Domain.Repositories.Implementations
 
         public IEnumerable<EntityEntry<T>> Add(IEnumerable<T> entities)
         {
-            foreach(var entity in entities)
+            var listOfEntries = new List<EntityEntry<T>>();
+            foreach(var newEntity in entities)
             {
-                yield return _context.Add(entity);
+                listOfEntries.Add(_context.Add(newEntity));
             }
+            return listOfEntries;
         }
 
         public EntityEntry<T> Delete(T entity)

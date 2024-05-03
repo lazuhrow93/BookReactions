@@ -82,10 +82,11 @@ namespace Chronical.App.Services.Implementations
             var result = new RepositoryResult<IEnumerable<Comment>>();
             result.SetState(State.NotAdded);
 
-            var newComment = _mapper.Map<IEnumerable<Comment>>(dto);
+            var newComment = _mapper.Map<List<Comment>>(dto);
 
             var entityEntry = _commentRepository.Add(newComment);
-            _commentRepository.SaveChanges();
+
+            _commentRepository.SaveChanges(); //why is it saying duplicate key??
             result.SetState(State.Added);
             result.Entity = entityEntry.Select(e=>e.Entity).AsEnumerable();
             return result;
@@ -115,7 +116,6 @@ namespace Chronical.App.Services.Implementations
             }
 
             //parse comments into dto
-            //NEED TO TEST THIS. PARSING INTO THE BIG DTO OF ALL OCMMENTS
 
             var commentsByCharacterId = comments.ToLookup(c => c.CharacterId);
             var characterIds = commentsByCharacterId.Select(c => c.Key);
@@ -124,13 +124,11 @@ namespace Chronical.App.Services.Implementations
                 var character = _characterRepository.Get(characterId);
                 var characterCommentsDto = _mapper.Map<CharacterCommentsDto>(character);
                 characterCommentsDto.Comments = _mapper.Map<List<CommentDetailsDto>>(commentsByCharacterId[characterId].ToList());
-                //outgoingDto.Comments.Add(new CharacterCommentsDto()
-                //{
-                //    CharacterId = character!.Id,
-                //    CharacterName = character.FullName,
-                //    Comments = _mapper.Map<List<CommentDto>>(commentsByCharacterId[characterId])
-                //});
+                outgoingDto.CharacterComments.Add(characterCommentsDto);
             }
+
+            result.Entity = outgoingDto;
+            result.SetState(State.Found);
 
             return result;
         }

@@ -2,8 +2,8 @@
 {
     public class BookCommentsDetailsDto
     {
-        public string? Title { get; set; }
+        public string? BookTitle { get; set; }
         public int BookId { get; set; }
-        public List<CharacterCommentsDto> Comments { get; set; } = new List<CharacterCommentsDto>();
+        public List<CharacterCommentsDto> CharacterComments { get; set; } = new List<CharacterCommentsDto>();
     }
 }
