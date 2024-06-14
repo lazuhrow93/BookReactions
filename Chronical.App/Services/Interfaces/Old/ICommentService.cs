@@ -5,7 +5,7 @@ using Chronical.App.Models.OutgoingDto;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 
-namespace Chronical.App.Services.Interfaces
+namespace Chronical.App.Services.Interfaces.Old
 {
     public interface ICommentService
     {

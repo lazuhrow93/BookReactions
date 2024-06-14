@@ -2,13 +2,13 @@
 using Chronicle.Tests.UnitTests.MapperProfiles;
 using Xunit;
 using Chronical.App.Mappers;
-using Chronical.App.Services.Interfaces;
-using Chronical.App.Services.Implementations;
 using Chronical.App.Helper;
 using Chronical.App.Services.Extensions;
 using Chronical.App.Models.IncomingDto;
 using NSubstitute;
 using Chronicle.Tests.Utility.Extensions;
+using Chronical.App.Services.Implementations.Old;
+using Chronical.App.Services.Interfaces.Old;
 
 namespace Chronicle.Tests.UnitTests.Services
 {

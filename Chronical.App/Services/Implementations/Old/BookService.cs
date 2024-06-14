@@ -2,12 +2,12 @@
 using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models.OutogingDto;
 using Chronical.App.Services.Extensions;
-using Chronical.App.Services.Interfaces;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 
-namespace Chronical.App.Services.Implementations
+namespace Chronical.App.Services.Implementations.Old
 {
     public class BookService : IBookService
     {

@@ -1,7 +1,7 @@
 ﻿using Chronical.App.Models;
 using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models.OutgoingDto;
-using Chronical.App.Services.Interfaces;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;

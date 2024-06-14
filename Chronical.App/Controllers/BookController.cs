@@ -1,12 +1,12 @@
 ﻿using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models;
-using Chronical.App.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Chronicle.Domain.Repositories;
 using Chronical.App.Models.OutgoingDto;
 using Chronical.App.Models.OutogingDto;
 using AutoMapper;
 using Chronicle.Domain.Entity;
+using Chronical.App.Services.Interfaces.Old;
 
 namespace Chronical.App.Controllers
 {

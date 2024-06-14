@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Chronical.App.Models.IncomingDto;
 using Chronical.App.Models.OutgoingDto;
-using Chronical.App.Services.Interfaces;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 
-namespace Chronical.App.Services.Implementations
+namespace Chronical.App.Services.Implementations.Old
 {
     public class CommentService : ICommentService
     {
@@ -39,8 +39,8 @@ namespace Chronical.App.Services.Implementations
             repoResult.SetState(State.NotFound);
 
             var characterInBook = _characterRepository.Get(characterId);
-            
-            if(characterInBook is null)
+
+            if (characterInBook is null)
             {
                 repoResult.AddError(string.Format("Unable to find character {0}", characterId));
                 return repoResult;
@@ -60,11 +60,11 @@ namespace Chronical.App.Services.Implementations
             result.SetState(State.NotAdded);
 
             var character = _characterRepository.Get(dto.CharacterId);
-            if(character is null)
+            if (character is null)
             {
                 result.AddError(string.Format("Unable to find that character {0}", dto.CharacterId));
                 return result;
-                
+
             }
 
             var newComment = _mapper.Map<Comment>(dto);
@@ -88,7 +88,7 @@ namespace Chronical.App.Services.Implementations
 
             _commentRepository.SaveChanges(); //why is it saying duplicate key??
             result.SetState(State.Added);
-            result.Entity = entityEntry.Select(e=>e.Entity).AsEnumerable();
+            result.Entity = entityEntry.Select(e => e.Entity).AsEnumerable();
             return result;
         }
 
@@ -98,7 +98,7 @@ namespace Chronical.App.Services.Implementations
             result.SetState(State.NotFound);
 
             var book = _bookRepository.Get(bookId);
-            if(book is null)
+            if (book is null)
             {
                 result.AddError(string.Format("Unable to find book {0}", bookId));
                 return result;
@@ -109,7 +109,7 @@ namespace Chronical.App.Services.Implementations
 
             var testcomments = _commentRepository.FetchAll(); //NEED TO FIGRE OUT WHY ITS NOT FETCHING ALL
             var comments = _commentRepository.Find(c => c.BookId == bookId);
-            if(comments?.Any() != true)
+            if (comments?.Any() != true)
             {
                 result.Entity = outgoingDto;
                 return result;
@@ -119,7 +119,7 @@ namespace Chronical.App.Services.Implementations
 
             var commentsByCharacterId = comments.ToLookup(c => c.CharacterId);
             var characterIds = commentsByCharacterId.Select(c => c.Key);
-            foreach(var characterId in characterIds)
+            foreach (var characterId in characterIds)
             {
                 var character = _characterRepository.Get(characterId);
                 var characterCommentsDto = _mapper.Map<CharacterCommentsDto>(character);

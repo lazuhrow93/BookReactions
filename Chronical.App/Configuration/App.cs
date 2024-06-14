@@ -1,5 +1,5 @@
-﻿using Chronical.App.Services.Implementations;
-using Chronical.App.Services.Interfaces;
+﻿using Chronical.App.Services.Implementations.Old;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Repositories.Interfaces;
 
 namespace Chronical.App.Configuration

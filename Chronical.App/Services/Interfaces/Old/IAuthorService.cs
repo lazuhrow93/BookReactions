@@ -3,7 +3,7 @@ using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Chronical.App.Services.Interfaces
+namespace Chronical.App.Services.Interfaces.Old
 {
     public interface IAuthorService
     {

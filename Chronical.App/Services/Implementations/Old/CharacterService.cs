@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Chronical.App.Models.IncomingDto;
-using Chronical.App.Services.Interfaces;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 
-namespace Chronical.App.Services.Implementations
+namespace Chronical.App.Services.Implementations.Old
 {
     public class CharacterService : ICharacterService
     {
@@ -27,8 +27,8 @@ namespace Chronical.App.Services.Implementations
             var repoResult = new RepositoryResult<Character>();
             repoResult.SetState(State.NotAdded);
 
-            var bookDoesNotExists = (_bookRepository.Get(dto.BookId) == null);
-            if(bookDoesNotExists)
+            var bookDoesNotExists = _bookRepository.Get(dto.BookId) == null;
+            if (bookDoesNotExists)
             {
                 repoResult.AddError(string.Format("Unable to find the book with id {bookId}", dto.BookId));
                 return repoResult;
@@ -55,10 +55,10 @@ namespace Chronical.App.Services.Implementations
 
             var character = _mapper.Map<List<Character>>(characters);
             var result = _characterRepository.Add(character);
-            if (result.All(e=>e.State == Microsoft.EntityFrameworkCore.EntityState.Added))
+            if (result.All(e => e.State == Microsoft.EntityFrameworkCore.EntityState.Added))
             {
                 repoResult.SetState(State.Added);
-                repoResult.Entity = result.Select(e=>e.Entity).AsEnumerable();
+                repoResult.Entity = result.Select(e => e.Entity).AsEnumerable();
             }
             else
                 repoResult.AddError("Unable to add the Character for unknown reason");
@@ -73,7 +73,7 @@ namespace Chronical.App.Services.Implementations
             repoResult.SetState(State.NotFound);
 
             var book = _bookRepository.Get(bookId);
-            if(book is null)
+            if (book is null)
             {
                 repoResult.AddError(string.Format("Unable to find that book [{0}]", bookId));
             }

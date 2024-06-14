@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Chronical.App.Models.IncomingDto;
 using Chronical.App.Services.Extensions;
-using Chronical.App.Services.Interfaces;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Chronical.App.Services.Implementations
+namespace Chronical.App.Services.Implementations.Old
 {
     public class AuthorService : IAuthorService
     {
@@ -27,7 +27,7 @@ namespace Chronical.App.Services.Implementations
             var result = new RepositoryResult<Author>();
             result.SetState(State.NotAdded);
 
-            if(existingAuthor != null)
+            if (existingAuthor != null)
             {
                 result
                     .SetState(State.AlreadyExists)

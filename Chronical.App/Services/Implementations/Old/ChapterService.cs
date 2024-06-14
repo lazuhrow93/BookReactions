@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Chronical.App.Models.IncomingDto;
 using Chronical.App.Services.Extensions;
-using Chronical.App.Services.Interfaces;
+using Chronical.App.Services.Interfaces.Old;
 using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories;
 using Chronicle.Domain.Repositories.Interfaces;
 using SpicyWing.Extensions;
 
-namespace Chronical.App.Services.Implementations
+namespace Chronical.App.Services.Implementations.Old
 {
     public class ChapterService : IChapterService
     {
@@ -35,7 +35,7 @@ namespace Chronical.App.Services.Implementations
             result.SetState(State.NotAdded);
 
             var book = _bookRepository.Get(newChapterDto.BookId);
-            if(book is null)
+            if (book is null)
             {
                 result.SetState(State.NotFound);
                 result.AddError("The book doesnt exist for this chapter");
@@ -70,10 +70,10 @@ namespace Chronical.App.Services.Implementations
 
             var entityEntries = _chapterRepository.Add(newChapter);
 
-            if (entityEntries.All(e=>e.State == Microsoft.EntityFrameworkCore.EntityState.Added))
+            if (entityEntries.All(e => e.State == Microsoft.EntityFrameworkCore.EntityState.Added))
             {
                 result.SetState(State.Added);
-                result.Entity = entityEntries.Select(e=>e.Entity).AsEnumerable();
+                result.Entity = entityEntries.Select(e => e.Entity).AsEnumerable();
                 _chapterRepository.SaveChanges();
             }
             else
