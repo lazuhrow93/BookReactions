@@ -15,7 +15,7 @@ namespace Chronical.App.Services.Implementations
 
         public Task AddAuthor(AuthorDto authorDto)
         {
-            a
+            throw new NotImplementedException();
         }
 
         public Task AddBook(BookDto bookDto)
