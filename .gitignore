@@ -36,3 +36,7 @@
 /Chronicle.Tests.Utility/obj/project.nuget.cache
 /Chronicle.Tests/obj/Chronicle.Tests.csproj.nuget.g.props
 /Chronicle.Tests/obj/Chronicle.Tests.csproj.nuget.g.targets
+/Chronicle/Chronicle.sln
+/Chronicle.Services/obj
+/Chronicle.Tests.Utility/obj/Chronicle.Tests.Utility.csproj.nuget.g.props
+/Chronicle.Tests.Utility/obj/Chronicle.Tests.Utility.csproj.nuget.g.targets
