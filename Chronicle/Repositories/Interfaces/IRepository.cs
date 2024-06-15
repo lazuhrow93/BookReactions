@@ -5,17 +5,18 @@ using Chronicle.Domain.Entity;
 namespace Chronicle.Domain.Repositories.Interfaces
 {
     public interface IRepository<TEntity>
-        where TEntity : Entity<TEntity>
+        where TEntity : Entity.Entity
     {
         public IQueryable<TEntity> Query { get; }
         public IEnumerable<TEntity> FetchAll();
-        public TEntity? Get(int id);
-        public EntityEntry<TEntity> Add(TEntity entity);
+        public Task<TEntity?> Get(int id);
+        Task<EntityEntry<TEntity>> Add(TEntity entity);
         public IEnumerable<EntityEntry<TEntity>> Add(IEnumerable<TEntity> entities);
         public EntityEntry<TEntity> Update(TEntity entity);
-        public EntityEntry<TEntity> Delete(TEntity entities);
+        public Task<EntityEntry<TEntity>> Delete(TEntity entities);
         public IEnumerable<EntityEntry<TEntity>> Delete(IEnumerable<TEntity> entities);
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        public int SaveChanges();
+        public Task<int> SaveChanges();
+        Task<EntityEntry<TEntity>> NoChange(TEntity entity);
     }
 }

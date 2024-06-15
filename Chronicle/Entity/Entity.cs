@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Domain.Entity
 {
-    public class Entity<T> : IEntity
+    public class Entity : IEntity
     {
         public int Id { get; set; }
+        public DateTime SyncTimestamp { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

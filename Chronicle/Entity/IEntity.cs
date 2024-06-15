@@ -8,6 +8,8 @@ namespace Chronicle.Domain.Entity
 {
     public interface IEntity
     {
-        public int Id { get; set; }
+        int Id { get; }
+        DateTime SyncTimestamp { get; }
+        DateTime CreatedDate { get; }
     }
 }

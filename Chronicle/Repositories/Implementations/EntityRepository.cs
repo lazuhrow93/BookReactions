@@ -1,6 +1,7 @@
 ﻿using Chronicle.Domain.Entity;
 using Chronicle.Domain.Repositories.Interfaces;
 using Chronicle.Entity.Database;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,9 @@ namespace Chronicle.Domain.Repositories.Implementations
             return Query.AsEnumerable();
         }
 
-        public EntityEntry<T> Add(T entity)
+        public async Task<EntityEntry<T>> Add(T entity)
         {
-            return _context.Add(entity);
+            return await _context.AddAsync(entity);
         }
 
         public IEnumerable<EntityEntry<T>> Add(IEnumerable<T> entities)
@@ -46,9 +47,9 @@ namespace Chronicle.Domain.Repositories.Implementations
             return listOfEntries;
         }
 
-        public EntityEntry<T> Delete(T entity)
+        public Task<EntityEntry<T>> Delete(T entity)
         {
-            return _context.Remove(entity);
+            return Task.FromResult(_context.Remove(entity));
         }
 
         public IEnumerable<EntityEntry<T>> Delete(IEnumerable<T> entities)
@@ -59,9 +60,9 @@ namespace Chronicle.Domain.Repositories.Implementations
             }
         }
 
-        public T? Get(int id)
+        public Task<T?> Get(int id)
         {
-            return Query.FirstOrDefault(t => t.Id == id);
+            return Query.FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public EntityEntry<T> Update(T entity)
@@ -74,9 +75,14 @@ namespace Chronicle.Domain.Repositories.Implementations
             return Query.Where(predicate).AsEnumerable();
         }
 
-        public int SaveChanges()
+        public async Task<int> SaveChanges()
         {
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
+        }
+
+        public Task<EntityEntry<T>> NoChange(T entity)
+        {
+            return Task.FromResult(_context.Entry(entity));
         }
     }
 }
