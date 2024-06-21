@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Chronicle.Domain.Repositories.Implementations
 {
     public class EntityRepository<T> : IRepository<T>
-        where T : Entity<T>
+        where T : Entity.Entity
     {
         private ChronicleDbContext _context;
 
